@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BiblioTech Mockup</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="app-header">
+<h1>BiblioTech</h1>
+<p>Platformă personală pentru evidența lecturilor și a colecției de cărți.</p>
+<p class="app-count">3 volume înregistrate, dintre care 2 în așteptare</p>
+</header>
+<main class="container">
+<section class="panel">
+<h2>Adaugă volum nou</h2>
+<form class="item-form">
+<label>Titlu și autor <input type="text" name="titlu" placeholder="Ex: Fizica tristeții - G. Gospodinov" /></label>
+<label>Tip ediție
+<select name="eticheta">
+<option value="cartonata">Cartonată (Hardcover)</option>
+<option value="brosata">Broșată (Paperback)</option>
+<option value="digitala">Digitală (E-book)</option>
+</select>
+</label>
+<button type="submit">Înregistrează</button>
+</form>
+</section>
+<section class="panel">
+<h2>Raftul meu virtual</h2>
+<!-- Când lista e goală: <p class="empty">Nu există niciun element.</p> -->
+<ul class="item-list">
+<li class="item-card">
+<div>
+<h3>Fizica tristeții</h3>
+<span class="badge badge-brosata">Ediție: Broșată</span>
+</div>
+<span class="status">În așteptare</span>
+</li>
+<li class="item-card done">
+<div>
+<h3>Atomic Habits</h3>
+<span class="badge badge-digitala">Ediție: Digitală</span>
+</div>
+<span class="status">Finalizată</span>
+</li>
+<li class="item-card">
+<div>
+<h3>Stăpânul Inelelor</h3>
+<span class="badge badge-cartonata">Ediție: Cartonată</span>
+</div>
+<span class="status">În așteptare</span>
+</li>
+</ul>
+</section>
+</main>
+<footer class="app-footer">Proiect Tehnologii Web</footer>
+</body>
+</html>
