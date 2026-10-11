@@ -26,7 +26,9 @@ Open `index.html` in a browser. No build step, no server.
 
 ## Status
 - [x] Stage 1: static mockup
-- [ ] Stage 2: data logic in JavaScript
+- [x] Stage 2: data logic in JavaScript
+## Stage 2: data logic
+Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read and change it. Results are printed in the browser console (F12).
 
 ## Tabelul de verificare (Checklist)
 
@@ -40,3 +42,12 @@ Open `index.html` in a browser. No build step, no server.
 | S1-R6 | 2 columns on desktop, 1 under 700px | [style.css#L143-L145](https://github.com/ElinCR7/BiblioTech/blob/8be7a3bd3abfa58105d54ad2b6642345717b8468/style.css#L143-L145) | resize < 700px |
 | S1-R7 | visible focus, readable dark theme | [style.css#L113-L116](https://github.com/ElinCR7/BiblioTech/blob/8be7a3bd3abfa58105d54ad2b6642345717b8468/style.css#L113-L116) | Tab; dark mode |
 | S1-R8 | commit "Stage 1" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/8be7a3bd3abfa58105d54ad2b6642345717b8468) | commit history |
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S2-R1 | JS file linked, logs on page load | [index.html#L61](https://github.com/ElinCR7/BiblioTech/blob/main/index.html) | open page, F12 |
+| S2-R2 | 3+ items with id, name, state, tag | [carti.js#L2-L6](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L2-L6) | read |
+| S2-R3 | list, count, search, add, toggle, delete | [carti.js#L64-L78](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L64-L78) | console output |
+| S2-R4 | add rejects empty name and invalid tag | [carti.js#L81-L82](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L81-L82) | last 2 console lines |
+| S2-R5 | original array unchanged after add | [carti.js#L71](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L71) | console line |
+| S2-R6 | README Stage 2 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-02.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-02.md) | read |
+| S2-R7 | commit "Stage 2" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
