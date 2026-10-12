@@ -51,3 +51,13 @@ Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read
 | S2-R5 | original array unchanged after add | [carti.js#L71](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L71) | console line |
 | S2-R6 | README Stage 2 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-02.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-02.md) | read |
 | S2-R7 | commit "Stage 2" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S3-R1 | npm run dev starts without errors | [frontend/package.json](https://github.com/URL_UL_TAU/BiblioTech/blob/main/frontend/package.json) | npm install, npm run dev |
+| S3-R2 | app name and counter computed from data | [frontend/src/App.jsx#L10-L17](https://github.com/URL_UL_TAU/BiblioTech/blob/main/frontend/src/App.jsx#L10-L17) | edit data, save |
+| S3-R3 | data from README, not from the example | [frontend/src/App.jsx#L3-L7](https://github.com/URL_UL_TAU/BiblioTech/blob/main/frontend/src/App.jsx#L3-L7) | compare with README |
+| S3-R4 | stage 1 styles reused | [frontend/src/App.css](https://github.com/URL_UL_TAU/BiblioTech/blob/main/frontend/src/App.css) | look at the page |
+| S3-R5 | node_modules ignored, build passes | [frontend/.gitignore](https://github.com/URL_UL_TAU/BiblioTech/blob/main/frontend/.gitignore) | npm run build |
+| S3-R6 | README Stage 3 section + AI log | [README.md](https://github.com/URL_UL_TAU/BiblioTech/blob/main/README.md), [ai-log/etapa-03.md](https://github.com/URL_UL_TAU/BiblioTech/blob/main/ai-log/etapa-03.md) | read |
+| S3-R7 | commit “Stage 3” pushed | [Commit Github](https://github.com/URL_UL_TAU/BiblioTech/commits/main) | commit history |
