@@ -28,9 +28,10 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 1: static mockup
 - [x] Stage 2: data logic in JavaScript
 - [x]Stage 3: Vite and React project
+- [x] Stage 4: components rendered from data
+☐ Stage 5: local state and events
 
-## Stage 2: data logic
-Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read and change it. Results are printed in the browser console (F12).
+
 
 ## Tabelul de verificare (Checklist)
 
@@ -44,6 +45,10 @@ Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read
 | S1-R6 | 2 columns on desktop, 1 under 700px | [style.css#L143-L145](https://github.com/ElinCR7/BiblioTech/blob/8be7a3bd3abfa58105d54ad2b6642345717b8468/style.css#L143-L145) | resize < 700px |
 | S1-R7 | visible focus, readable dark theme | [style.css#L113-L116](https://github.com/ElinCR7/BiblioTech/blob/8be7a3bd3abfa58105d54ad2b6642345717b8468/style.css#L113-L116) | Tab; dark mode |
 | S1-R8 | commit "Stage 1" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/8be7a3bd3abfa58105d54ad2b6642345717b8468) | commit history |
+
+## Stage 2: data logic
+Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read and change it. Results are printed in the browser console (F12).
+
 | ID | Requirement | Where (permalink) | How to check |
 |---|---|---|---|
 | S2-R1 | JS file linked, logs on page load | [index.html#L61](https://github.com/ElinCR7/BiblioTech/blob/main/index.html) | open page, F12 |
@@ -53,6 +58,15 @@ Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read
 | S2-R5 | original array unchanged after add | [carti.js#L71](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L71) | console line |
 | S2-R6 | README Stage 2 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-02.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-02.md) | read |
 | S2-R7 | commit "Stage 2" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+
+
+## Stage 3: Vite and React project
+The application was migrated to a React environment using Vite:
+The static files from previous stages were moved to a mockup folder.
+The data array is temporarily rendered as raw JSON.
+Stage 1 styles are preserved and applied through App.css.
+
+
 | ID | Requirement | Where (permalink) | How to check |
 |---|---|---|---|
 | S3-R1 | npm run dev starts without errors | [frontend/package.json](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/package.json) | npm install, npm run dev |
@@ -62,3 +76,21 @@ Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read
 | S3-R5 | node_modules ignored, build passes | [frontend/.gitignore](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.gitignore) | npm run build |
 | S3-R6 | README Stage 3 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-03.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-03.md) | read |
 | S3-R7 | commit “Stage 3” pushed | [Commit Github](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+
+## Stage 4: components
+The list is rendered from the data, through two components:
+CarteList receives the whole array and renders one card per item
+CarteCard receives a single item through props and displays it
+
+### Tabelul de verificare al Etapei 4
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S4-R1 | 2+ components in src/components/ | [frontend/src/components/](https://github.com/ElinCR7/BiblioTech/tree/main/frontend/src/components/) | open folder |
+| S4-R2 | card receives data through props | [frontend/src/components/CarteCard.jsx#L11-L15](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L11-L15) | read |
+| S4-R3 | map + key={id}, no console warnings | [frontend/src/components/CarteList.jsx#L12-L14](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L12-L14) | F12, Console |
+| S4-R4 | message for empty list | [frontend/src/components/CarteList.jsx#L4-L6](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L4-L6) | set array to [] |
+| S4-R5 | state changes the card look | [frontend/src/components/CarteCard.jsx#L15](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L15) | toggle a done flag |
+| S4-R6 | README Stage 4 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-04.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-04.md) | read |
+| S4-R7 | commit "Stage 4" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+
