@@ -177,3 +177,54 @@ button:hover {
   border-radius: 4px;
   overflow-x: auto;
 }
+/* --- Stiluri Etapa 4: Carduri --- */
+.carte-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carte-card {
+  background-color: #374151; /* Fundal card */
+  border-left: 5px solid #0d9488; /* Turcuaz pentru necitite */
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.carte-card.done {
+  border-left: 5px solid #db2777; /* Roz pentru citite */
+  opacity: 0.8;
+}
+
+.carte-card h3 {
+  margin: 0 0 8px 0;
+}
+
+.status {
+  font-weight: bold;
+  color: #fbcfe8;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: #111827;
+  font-weight: bold;
+}
+
+.badge-brosata { background-color: #34d399; }
+.badge-digitala { background-color: #60a5fa; }
+.badge-cartonata { background-color: #fbbf24; }
+
+.empty {
+  color: #9ca3af;
+  font-style: italic;
+}

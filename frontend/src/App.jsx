@@ -1,4 +1,5 @@
 import "./App.css";
+import CarteList from "./components/CarteList.jsx";
 
 const carti = [
   { id: 1, titluAutor: "Fizica tristeții", citita: false, format: "Broșată" },
@@ -20,7 +21,7 @@ export default function App() {
       <main className="container">
         <section className="panel">
           <h2>Cărțile mele</h2>
-          <pre className="json-output">{JSON.stringify(carti, null, 2)}</pre>
+          <CarteList carti={carti} />
         </section>
       </main>
     </>
