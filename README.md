@@ -29,7 +29,7 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 2: data logic in JavaScript
 - [x] Stage 3: Vite and React project
 - [x] Stage 4: components rendered from data
-- [x] Stage 5: local state and events
+- [x ] Stage 5: local state and events
 - [ ] Stage 6: loading data from a mock API
 
 
@@ -58,7 +58,7 @@ Plain JavaScript, no DOM. `carti.js` holds the array and the functions that read
 | S2-R4 | add rejects empty name and invalid tag | [carti.js#L81-L82](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L81-L82) | last 2 console lines |
 | S2-R5 | original array unchanged after add | [carti.js#L71](https://github.com/ElinCR7/BiblioTech/blob/main/carti.js#L71) | console line |
 | S2-R6 | README Stage 2 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-02.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-02.md) | read |
-| S2-R7 | commit "Stage 2" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+| S2-R7 | commit "Stage 2" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/e31886d83128fc012ac32b75a64706245025854d) | commit history |
 
 
 ## Stage 3: Vite and React project
@@ -76,7 +76,7 @@ Stage 1 styles are preserved and applied through App.css.
 | S3-R4 | stage 1 styles reused | [frontend/src/App.css](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.css) | look at the page |
 | S3-R5 | node_modules ignored, build passes | [frontend/.gitignore](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.gitignore) | npm run build |
 | S3-R6 | README Stage 3 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-03.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-03.md) | read |
-| S3-R7 | commit “Stage 3” pushed | [Commit Github](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+| S3-R7 | commit “Stage 3” pushed | [Commit Github](https://github.com/ElinCR7/BiblioTech/commits/b7e5c548347e48a39d500270db7ee1b0765f5667) | commit history |
 
 ## Stage 4: components
 The list is rendered from the data, through two components:
@@ -93,7 +93,7 @@ CarteCard receives a single item through props and displays it
 | S4-R4 | message for empty list | [frontend/src/components/CarteList.jsx#L4-L6](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L4-L6) | set array to [] |
 | S4-R5 | state changes the card look | [frontend/src/components/CarteCard.jsx#L15](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L15) | toggle a done flag |
 | S4-R6 | README Stage 4 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-04.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-04.md) | read |
-| S4-R7 | commit "Stage 4" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+| S4-R7 | commit "Stage 4" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/7d8238727c1b43ec6b81624bdf23d83714729676) | commit history |
 
 ## Stage 5: local state and events
 The list lives in React state. Checking and deleting work from the page,
@@ -112,4 +112,4 @@ which is what stage 6 and stage 10 fix.
 | S5-R5 | immutable updates (no push, splice, assignment) | [App.jsx#L22-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L22-L31) | read |
 | S5-R6 | light/dark toggle: state + data-theme on html | [App.jsx#L19](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L19), [App.css#L16-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.css#L16-L31) | click the button, both system themes |
 | S5-R7 | no console warnings; README + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-05.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-05.md) | F12, Console |
-| S5-R8 | commit "Stage 5" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
+| S5-R8 | commit "Stage 5" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/1828662b24aa55130883883c766bed6f2992e6bc) | commit history |
