@@ -30,7 +30,7 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 3: Vite and React project
 - [x] Stage 4: components rendered from data
 - [x] Stage 5: local state and events
-- [ ] Stage 6: loading data from a mock API
+- [x] Stage 6: loading data from a mock API
 
 
 
@@ -113,3 +113,22 @@ which is what stage 6 and stage 10 fix.
 | S5-R6 | light/dark toggle: state + data-theme on html | [App.jsx#L19](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L19), [App.css#L16-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.css#L16-L31) | click the button, both system themes |
 | S5-R7 | no console warnings; README + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-05.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-05.md) | F12, Console |
 | S5-R8 | commit "Stage 5" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/21172aef34a09aa2c5f9f401a8f90b5971429af8) | commit history |
+
+## Stage 6: loading data from a mock API
+The initial data was moved to `frontend/db.json` and is served by `json-server`
+on port 3001. All HTTP requests live in `frontend/src/api.js` (reading the base
+URL from `VITE_API_URL`), while `App.jsx` loads the list on mount through
+`useEffect(..., [])` with a cleanup flag and renders the loading, error, and
+success states.
+
+### Tabelul de verificare al Etapei 6
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S6-R1 | db.json with 5+ items; npm run api on 3001 | [db.json](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/db.json), [package.json](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/package.json) | npm run api, open /carti |
+| S6-R2 | api.js reads VITE_API_URL, exports fetchCarti | [api.js#L1-L10](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js#L1-L10) | read |
+| S6-R3 | useEffect with [] and ignore; initial state [] | [App.jsx#L29-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L29-L31), [App.jsx#L76-L107](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L76-L107) | F12, Network (one request) |
+| S6-R4 | loading, error, and data states rendered | [App.jsx#L569-L581](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L569-L581) | stop npm run api, refresh |
+| S6-R5 | .env.example committed, .env in .gitignore | [.env.example](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.env.example), [.gitignore](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.gitignore) | git status |
+| S6-R6 | README Stage 6 section + How to run + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-06.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-06.md) | read |
+| S6-R7 | commit "Stage 6" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
