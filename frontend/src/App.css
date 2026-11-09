@@ -1,3 +1,209 @@
+/* --- Variabile CSS pentru Dark și Light Mode --- */
+:root {
+  --bg-body: #f3f4f6;
+  --bg-panel: #ffffff;
+  --bg-card: #f9fafb;
+  --text-main: #111827;
+  --text-muted: #6b7280;
+  
+  --turcuaz: #0d9488;
+  --roz: #db2777;
+  --roz-deschis: #fbcfe8;
+  --btn-hover: #be185d;
+}
+
+/* Tema sistemului, dacă utilizatorul nu a ales explicit tema luminoasă */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-body: #111827;
+    --bg-panel: #1f2937;
+    --bg-card: #374151;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+  }
+}
+
+/* Tema aleasă din buton are prioritate față de cea a sistemului */
+:root[data-theme="dark"] {
+  --bg-body: #111827;
+  --bg-panel: #1f2937;
+  --bg-card: #374151;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+}
+
+/* --- Layout general --- */
+body {
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  margin: 0;
+  font-family: sans-serif;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.app-header {
+  position: relative;
+  background-color: var(--turcuaz);
+  color: white;
+  padding: 24px;
+  border-bottom: 5px solid var(--roz);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.status-text {
+  color: var(--roz-deschis);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.panel {
+  background-color: var(--bg-panel);
+  padding: 24px;
+  border-radius: 8px;
+  border-left: 5px solid var(--turcuaz);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Etapa 4 & 5: Lista, cardurile, butoanele --- */
+.carte-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.carte-card {
+  background-color: var(--bg-card);
+  border-left: 5px solid var(--turcuaz);
+  padding: 16px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carte-card.done {
+  border-left: 5px solid var(--roz);
+  opacity: 0.8;
+}
+
+/* Checkbox & Text */
+.carte-main { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  cursor: pointer; 
+}
+
+.carte-main input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--roz);
+  cursor: pointer;
+}
+
+.carte-card.done h3 {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.carte-card h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-main);
+}
+
+/* Etichete */
+.badge {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  color: #111827;
+  font-weight: bold;
+}
+.badge-brosata { background-color: #34d399; }
+.badge-digitala { background-color: #60a5fa; }
+.badge-cartonata { background-color: #fbbf24; }
+
+.empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* Buton Șterge */
+.btn-danger {
+  border: 1px solid var(--roz);
+  background: transparent;
+  color: var(--roz);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font: inherit;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger:hover { 
+  background: var(--roz); 
+  color: #fff; 
+}
+
+/* Buton Teme */
+.theme-toggle {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+  background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.theme-toggle:hover { 
+  background: rgba(255, 255, 255, 0.15); 
+}
+
+/* --- Extra Roz --- */
+
+/* Titlul principal în roz deschis */
+.app-header h1 {
+  color: var(--roz-deschis);
+}
+
+/* Titlul listei cu text și subliniere roz */
+.panel h2 {
+  color: var(--roz);
+  border-bottom: 2px solid var(--roz);
+  padding-bottom: 8px;
+  margin-top: 0;
+}
+
+/* Butonul de temă cu accente roz */
+.theme-toggle {
+  border: 1px solid var(--roz-deschis);
+  color: var(--roz-deschis);
+}
+
+.theme-toggle:hover {
+  background-color: var(--roz);
+  color: #fff;
+  border-color: var(--roz);
+}
+
+/* Cardurile necitite să aibă un contur roz foarte subtil pe dreapta (opțional) */
+.carte-card {
+  border-right: 2px solid var(--roz-deschis);
+}
 /* ========================================== */
 /* 1. VARIABILE ȘI TEMA (Culori Calde Mahon)  */
 /* ========================================== */
