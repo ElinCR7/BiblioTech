@@ -1,0 +1,1700 @@
+/* ========================================== */
+/* 1. VARIABILE ȘI TEMA (Culori Calde Mahon)  */
+/* ========================================== */
+:root { /* Declară variabilele globale valabile în tot documentul (tema Dark implicită) */
+  --bg-body: #160c08; /* Culoarea de bază a paginii (maro-mahon foarte închis) */
+  --bg-panel: rgba(38, 21, 14, 0.72); /* Culoarea semitransparentă a panoului central */
+  --bg-navbar: rgba(24, 13, 9, 0.88); /* Culoarea semitransparentă a bării de navigație de sus */
+  --text-main: #fef3c7; /* Culoarea textului principal (crem cald) */
+  --text-muted: #d6c3b3; /* Culoarea textului secundar (bej estompat) */
+  --turcuaz: #0f766e; /* Culoarea de bază pentru cărțile disponibile */
+  --roz-inchis: #f472b6; /* Culoarea roz deschis pentru accente și lumini */
+  --roz-carte: #d5537e; /* Culoarea coperții pentru cărțile împrumutate/citite */
+  --auriu: #fbbf24; /* Culoarea aurie pentru rame și detalii */
+  --border-warm: rgba(251, 191, 36, 0.32); /* Culoarea chenarelor fine aurii */
+  --mouse-x: 50vw; /* Poziția inițială pe orizontală a lumânării de pe mouse */
+  --mouse-y: 50vh; /* Poziția inițială pe verticală a lumânării de pe mouse */
+} /* Închide blocul :root */
+
+[data-theme="light"] { /* Suprascrie variabilele când utilizatorul comută pe modul Luminos */
+  --bg-body: #2c1a12; /* Fundal maro mai deschis */
+  --bg-panel: rgba(255, 250, 240, 0.92); /* Panou central crem-fildeș luminos */
+  --bg-navbar: rgba(255, 248, 235, 0.94); /* Navbar crem deschis */
+  --text-main: #29180e; /* Text principal maro închis pentru contrast pe fundal deschis */
+  --text-muted: #6b4c35; /* Text secundar maro mediu */
+  --turcuaz: #0d9488; /* Nuanță de turcoaz puțin mai vie */
+  --roz-inchis: #ec4899; /* Nuanță de roz intens */
+  --roz-carte: #be4673; /* Nuanță de roz-vișiniu pentru cărțile împrumutate */
+  --auriu: #d97706; /* Auriu-chihlimbar mai închis */
+  --border-warm: rgba(180, 83, 9, 0.35); /* Chenare arămii discrete */
+} /* Închide blocul temei luminoase */
+
+* { /* Selectează absolut toate elementele din pagină */
+  box-sizing: border-box; /* Include padding-ul și border-ul în lățimea/înălțimea elementelor */
+  margin: 0; /* Elimină marginile exterioare implicite ale browserului */
+  padding: 0; /* Elimină spațierile interioare implicite ale browserului */
+} /* Închide resetarea globală */
+
+body { /* Stilurile generale pentru corpul paginii */
+  background-color: var(--bg-body); /* Aplică culoarea de fundal din variabilă */
+  color: var(--text-main); /* Aplică culoarea textului din variabilă */
+  font-family: 'Georgia', serif; /* Setează fontul clasic cu serife pentru aspectul literar */
+  transition: background-color 0.3s, color 0.3s; /* Animează lin schimbarea culorilor la comutarea temei */
+  min-height: 100vh; /* Asigură că pagina ocupă cel puțin toată înălțimea ecranului */
+  position: relative; /* Stabilește contextul de poziționare */
+  overflow-x: hidden; /* Previne apariția barei de scroll orizontal */
+} /* Închide stilul body */
+
+/* ========================================================= */
+/* 2. FUNDALUL AMBIENTAL & EFECTUL DE LUMÂNARE PE MOUSE      */
+/* ========================================================= */
+.ambient-library-bg { /* Stratul fix cu imaginea bibliotecii de pe fundal */
+  position: fixed; /* Rămâne nemișcat pe ecran chiar și când dai scroll */
+  top: 0; left: 0; /* Aliniat în colțul din stânga-sus */
+  width: 100vw; height: 100vh; /* Ocupă 100% din lățimea și înălțimea ferestrei */
+  pointer-events: none; /* Ignoră click-urile mouse-ului ca să poți apăsa pe elementele de deasupra */
+  z-index: 0; /* Pus pe cel mai de jos strat */
+  background-image: /* Suprapune un gradient maro-cald peste fotografia bibliotecii */
+    linear-gradient(to bottom, rgba(28, 14, 8, 0.72) 0%, rgba(38, 19, 12, 0.65) 50%, rgba(24, 12, 7, 0.82) 100%), /* Voalul cald de mahon */
+    url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop"); /* Fotografia bibliotecii */
+  background-size: cover; /* Întinde imaginea să acopere tot ecranul fără deformare */
+  background-position: center; /* Centrează fotografia pe mijlocul ecranului */
+  filter: sepia(0.3) contrast(1.08) brightness(0.95); /* Aplică o tentă vintage caldă fotografiei */
+  animation: pulsatieCaldaCamera 12s infinite alternate ease-in-out; /* Mișcă ușor camera înainte și înapoi */
+} /* Închide .ambient-library-bg */
+
+@keyframes pulsatieCaldaCamera { /* Definește animația de respirație a fundalului */
+  0% { transform: scale(1); } /* Dimensiunea normală (100%) */
+  100% { transform: scale(1.05); } /* Ușor mărit (105%) */
+} /* Închide keyframes pulsatieCaldaCamera */
+
+.ambient-candle-glows { /* Stratul cu halourile ambientale de lumină din colțurile ecranului */
+  position: fixed; /* Fixat pe ecran la scroll */
+  top: 0; left: 0; /* Colțul stânga-sus */
+  width: 100vw; height: 100vh; /* Cât tot ecranul */
+  pointer-events: none; /* Nu blochează mouse-ul */
+  z-index: 1; /* Deasupra fotografiei de fundal */
+  background: /* Patru surse radiale de lumină difuză */
+    radial-gradient(circle at 12% 30%, rgba(251, 191, 36, 0.32) 0%, rgba(234, 88, 12, 0.14) 35%, transparent 65%), /* Lumină aurie stânga-sus */
+    radial-gradient(circle at 88% 25%, rgba(213, 83, 126, 0.28) 0%, transparent 55%), /* Lumină roz dreapta-sus */
+    radial-gradient(circle at 85% 78%, rgba(251, 191, 36, 0.3) 0%, rgba(217, 119, 6, 0.12) 40%, transparent 65%), /* Lumină caldă dreapta-jos */
+    radial-gradient(circle at 20% 82%, rgba(15, 118, 110, 0.25) 0%, transparent 55%); /* Lumină turcoaz stânga-jos */
+  animation: palpaireAmbientala 4s infinite alternate ease-in-out; /* Face luminile să pâlpâie lin */
+} /* Închide .ambient-candle-glows */
+
+@keyframes palpaireAmbientala { /* Animația de pâlpâire a luminilor ambientale */
+  0% { opacity: 0.85; filter: brightness(0.95); } /* Puțin mai slabă */
+  50% { opacity: 1; filter: brightness(1.12); } /* Mai strălucitoare la mijlocul ciclului */
+  100% { opacity: 0.9; filter: brightness(1); } /* Revine la intensitate medie */
+} /* Închide keyframes palpaireAmbientala */
+
+.bottom-warm-vignette { /* Aura caldă de la baza ecranului când dai scroll în jos */
+  position: fixed; /* Rămâne mereu lipită de marginea de jos a ferestrei */
+  bottom: 0; left: 0; /* Aliniată jos */
+  width: 100vw; height: 180px; /* Lățime completă și înălțime de 180px */
+  pointer-events: none; /* Nu blochează click-urile */
+  z-index: 1; /* Peste fundal */
+  background: linear-gradient(to top, rgba(180, 83, 9, 0.28) 0%, rgba(213, 83, 126, 0.08) 50%, transparent 100%); /* Degrade portocaliu de jos în sus */
+} /* Închide .bottom-warm-vignette */
+
+.mouse-candle-light { /* Raza de lumină care urmărește cursorul mouse-ului */
+  position: fixed; /* Fixată pe fereastră */
+  top: 0; left: 0; /* Aliniată sus-stânga */
+  width: 100vw; height: 100vh; /* Acoperă toată fereastra */
+  pointer-events: none; /* Esențial: lasă click-urile să treacă prin rază */
+  z-index: 900; /* Plasată peste rafturi și cărți ca să le lumineze */
+  background: /* Compusă din două cercuri concentrice la coordonatele mouse-ului */
+    radial-gradient( /* Miezul mic și intens al lumânării */
+      90px circle at var(--mouse-x) var(--mouse-y), /* Cercul de 90px centrat pe cursor */
+      rgba(254, 240, 138, 0.22) 0%, /* Galben cald în centru */
+      rgba(245, 158, 11, 0.12) 45%, /* Chihlimbar spre margine */
+      transparent 100% /* Devine complet transparent */
+    ),
+    radial-gradient( /* Haloul larg care luminează rafturile în jur */
+      420px circle at var(--mouse-x) var(--mouse-y), /* Cercul mare de 420px centrat pe cursor */
+      rgba(251, 191, 36, 0.14) 0%, /* Aurie difuză */
+      rgba(213, 83, 126, 0.06) 45%, /* Tentă rozalie discretă */
+      transparent 80% /* Se pierde în fundal */
+    );
+  mix-blend-mode: screen; /* Amestecă lumina cu elementele de dedesubt ca o lanternă reală */
+  animation: palpaireLumanareMouse 2.2s infinite alternate ease-in-out; /* Pâlpâire ușoară a razei */
+} /* Închide .mouse-candle-light */
+
+@keyframes palpaireLumanareMouse { /* Animația razei de pe mouse */
+  0% { opacity: 0.88; } /* Intensitate 88% */
+  50% { opacity: 1; } /* Intensitate 100% */
+  100% { opacity: 0.92; } /* Intensitate 92% */
+} /* Închide keyframes palpaireLumanareMouse */
+
+.cosmic-stars { /* Stratul cu particule de praf auriu plutitor */
+  position: fixed; /* Fixat pe ecran */
+  top: 0; left: 0; /* Stânga-sus */
+  width: 100vw; height: 100vh; /* Tot ecranul */
+  pointer-events: none; /* Nu interceptează mouse-ul */
+  z-index: 1; /* Deasupra fundalului */
+  background-image: /* Desenează puncte minuscule luminoase la diverse coordonate */
+    radial-gradient(2.5px 2.5px at 40px 60px, #fef08a, rgba(0,0,0,0)), /* Fir de praf galben */
+    radial-gradient(2px 2px at 130px 190px, #f59e0b, rgba(0,0,0,0)), /* Fir de praf portocaliu */
+    radial-gradient(3px 3px at 260px 100px, var(--roz-inchis), rgba(0,0,0,0)), /* Fir de praf roz */
+    radial-gradient(2.5px 2.5px at 380px 290px, #fde047, rgba(0,0,0,0)), /* Fir de praf auriu */
+    radial-gradient(2px 2px at 520px 140px, #2dd4bf, rgba(0,0,0,0)), /* Fir de praf turcoaz */
+    radial-gradient(2.5px 2.5px at 670px 360px, #fef08a, rgba(0,0,0,0)), /* Fir de praf crem */
+    radial-gradient(3px 3px at 790px 220px, #fb923c, rgba(0,0,0,0)), /* Fir de praf chihlimbar */
+    radial-gradient(2px 2px at 190px 460px, #ffffff, rgba(0,0,0,0)); /* Fir de praf alb */
+  background-repeat: repeat; /* Repetă modelul pe tot ecranul */
+  background-size: 550px 550px; /* Dimensiunea unui pătrat care se repetă */
+  opacity: 0.9; /* Vizibilitate 90% */
+  animation: prafAuriuPlutitor 14s infinite linear; /* Mișcă particulele continuu în sus */
+} /* Închide .cosmic-stars */
+
+@keyframes prafAuriuPlutitor { /* Animația de plutire a prafului */
+  0% { background-position: 0 0; } /* Poziția de start */
+  100% { background-position: -90px -550px; } /* Se deplasează în sus și ușor la stânga */
+} /* Închide keyframes prafAuriuPlutitor */
+
+/* ========================================== */
+/* 3. ECRANUL DE START: UȘILE 3D              */
+/* ========================================== */
+.landing-portal { /* Ecranul complet cu ușile bibliotecii */
+  position: fixed; /* Acoperă tot ecranul peste aplicație */
+  top: 0; left: 0; /* De sus până jos */
+  width: 100vw; height: 100vh; /* Lățime și înălțime 100% */
+  z-index: 9999; /* Deasupra tuturor celorlalte elemente */
+  perspective: 1600px; /* Adaugă adâncime 3D când ușile se rotesc */
+  display: flex; /* Folosește Flexbox pentru centrarea blazonului */
+  align-items: center; /* Centrează pe verticală */
+  justify-content: center; /* Centrează pe orizontală */
+  overflow: hidden; /* Ascunde marginile ușilor când ies din cadru */
+  transition: opacity 0.6s ease 1.2s; /* Dispare lin după 1.2 secunde de la deschidere */
+} /* Închide .landing-portal */
+
+.landing-portal.opening { /* Clasa activată când s-a apăsat butonul de intrare */
+  pointer-events: none; /* Dezactivează click-urile pe portal */
+  opacity: 0; /* Face portalul transparent la finalul animației */
+} /* Închide .landing-portal.opening */
+
+.portal-inner-light { /* Lumina puternică ce izbucnește dintre uși când se deschid */
+  position: absolute; /* Poziționată în spatele ușilor */
+  top: 0; left: 0; /* De la marginea de sus */
+  width: 100%; height: 100%; /* Cât tot portalul */
+  background: radial-gradient(circle, rgba(254, 240, 138, 0.9) 0%, rgba(245, 158, 11, 0.5) 40%, transparent 75%); /* Explozie de lumină aurie */
+  opacity: 0; /* Invizibilă când ușile sunt închise */
+  transform: scale(0.5); /* Pornită de la jumătate din dimensiune */
+  transition: opacity 1.2s ease, transform 1.5s ease; /* Crește și devine vizibilă lin */
+  z-index: 1; /* Între fundal și uși */
+} /* Închide .portal-inner-light */
+
+.landing-portal.opening .portal-inner-light { /* Starea luminii când ușile se deschid */
+  opacity: 1; /* Devine complet vizibilă */
+  transform: scale(2.2); /* Se mărește de 2.2 ori umplând ecranul */
+} /* Închide .portal-inner-light la deschidere */
+
+.door { /* Stilul comun pentru ambele uși de lemn */
+  position: absolute; /* Poziționate absolut în stânga și în dreapta */
+  top: 0; /* Lipite de marginea de sus */
+  width: 50.5vw; /* Jumătate de ecran (plus 0.5vw ca să nu rămână crăpătură la mijloc) */
+  height: 100vh; /* Toată înălțimea ecranului */
+  background: /* Textura de scânduri verticale de mahon */
+    radial-gradient(circle at center, rgba(245, 158, 11, 0.14) 0%, transparent 70%), /* Reflexie caldă pe lemn */
+    repeating-linear-gradient(90deg, #27150b 0px, #341c0f 12px, #1c0f07 24px); /* Liniile fibrei lemnului */
+  border-top: 8px solid #4a2813; /* Bordură groasă de lemn sus */
+  border-bottom: 8px solid #180c05; /* Bordură groasă de lemn jos */
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.92); /* Umbră interioară adâncă pe uși */
+  z-index: 2; /* Peste lumina interioară */
+  transition: transform 1.6s cubic-bezier(0.6, 0.05, 0.15, 0.95); /* Animația grea și realistă de rotație a ușilor */
+  transform-style: preserve-3d; /* Păstrează perspectiva 3D */
+  display: flex; /* Flexbox pentru panourile sculptate de pe uși */
+  flex-direction: column; /* Așază panourile unul sub altul */
+  justify-content: space-around; /* Distribuie spațiul egal între panouri */
+  padding: 60px 50px; /* Spațiere față de marginile ușii */
+} /* Închide .door */
+
+.door-left { /* Ușa din partea stângă */
+  left: 0; /* Lipită de marginea stângă a ecranului */
+  transform-origin: left center; /* Se rotește în jurul balamalelor din stânga */
+  border-right: 4px solid #b45309; /* Cantul metalic auriu de pe mijloc */
+  box-shadow: inset -15px 0 40px rgba(0,0,0,0.9), 10px 0 30px rgba(0,0,0,0.8); /* Umbra de îmbinare */
+} /* Închide .door-left */
+
+.door-right { /* Ușa din partea dreaptă */
+  right: 0; /* Lipită de marginea dreaptă a ecranului */
+  transform-origin: right center; /* Se rotește în jurul balamalelor din dreapta */
+  border-left: 4px solid #b45309; /* Cantul metalic auriu de pe mijloc */
+  box-shadow: inset 15px 0 40px rgba(0,0,0,0.9), -10px 0 30px rgba(0,0,0,0.8); /* Umbra de îmbinare */
+} /* Închide .door-right */
+
+.door-panel-top, /* Panoul sculptat de sus al ușii */
+.door-panel-bottom { /* Panoul sculptat de jos al ușii */
+  width: 100%; /* Ocupă toată lățimea disponibilă în ușă */
+  height: 42%; /* Ocupă 42% din înălțimea ușii */
+  border: 3px solid rgba(217, 119, 6, 0.4); /* Chenar sculptat cu tentă aurie */
+  border-radius: 6px; /* Colțuri ușor rotunjite */
+  background: rgba(18, 9, 4, 0.5); /* Lemn mai închis în adâncitura panoului */
+  box-shadow: /* Umbră adâncită + reflexie fină */
+    inset 0 0 25px rgba(0, 0, 0, 0.85), /* Umbră interioară */
+    0 2px 4px rgba(254, 240, 138, 0.12); /* Reflexie pe muchie */
+} /* Închide panourile ușii */
+
+.door-handle { /* Mânerele aurii ale ușilor */
+  position: absolute; /* Poziționate lângă îmbinarea dintre uși */
+  top: 50%; /* La jumătatea înălțimii ușii */
+  width: 18px; /* Lățimea mânerului */
+  height: 65px; /* Înălțimea mânerului */
+  background: linear-gradient(180deg, #fde047, #b45309, #78350f); /* Degrade metalic de alamă/aur */
+  border-radius: 10px; /* Formă cilindrică rotunjită */
+  transform: translateY(-50%); /* Centrează mânerul exact la mijloc pe verticală */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9), 0 0 12px rgba(254, 240, 138, 0.4); /* Umbră și strălucire */
+} /* Închide .door-handle */
+
+.door-left .door-handle { right: 25px; } /* Pune mânerul ușii stângi aproape de marginea ei dreaptă */
+.door-right .door-handle { left: 25px; } /* Pune mânerul ușii drepte aproape de marginea ei stângă */
+
+.landing-portal.opening .door-left { /* Rotația 3D a ușii stângi la deschidere */
+  transform: rotateY(-115deg); /* Se deschide larg spre exterior stânga */
+} /* Închide rotația ușii stângi */
+
+.landing-portal.opening .door-right { /* Rotația 3D a ușii drepte la deschidere */
+  transform: rotateY(115deg); /* Se deschide larg spre exterior dreapta */
+} /* Închide rotația ușii drepte */
+
+.portal-center-content { /* Plăcuța centrală cu titlul și butonul de intrare */
+  position: relative; /* Poziționată în centrul ecranului */
+  z-index: 5; /* Peste uși */
+  background: radial-gradient(circle at top, rgba(48, 25, 34, 0.96), rgba(22, 11, 16, 0.98)); /* Fundal nobil vișiniu-închis */
+  padding: 50px 60px; /* Spațiu interior generos */
+  border-radius: 16px; /* Colțuri rotunjite */
+  border: 2px solid rgba(251, 191, 36, 0.55); /* Ramă aurie strălucitoare */
+  text-align: center; /* Centrează tot textul și butonul */
+  box-shadow: /* Umbră profundă și aură caldă în jur */
+    0 30px 70px rgba(0, 0, 0, 0.95), /* Umbră neagră */
+    0 0 60px rgba(245, 158, 11, 0.3), /* Halou auriu exterior */
+    inset 0 0 30px rgba(213, 83, 126, 0.25); /* Reflexie roz interioară */
+  transition: transform 0.9s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.7s ease; /* Tranziția când zboară spre utilizator */
+  max-width: 90%; /* Nu depășește 90% pe ecrane mici */
+} /* Închide .portal-center-content */
+
+.landing-portal.opening .portal-center-content { /* Animația plăcuței când se deschid ușile */
+  transform: scale(1.6) translateZ(300px); /* Vine în față spre cameră */
+  opacity: 0; /* Dispare lin */
+} /* Închide animația plăcuței */
+
+.portal-candle { /* Containerul lumânării de pe ecranul de start */
+  position: relative; /* Bază pentru elementele lumânării */
+  width: 24px; /* Lățime 24px */
+  height: 55px; /* Înălțime 55px */
+  margin: 0 auto 20px auto; /* Centrată orizontal cu 20px spațiu dedesubt */
+} /* Închide .portal-candle */
+
+.portal-title { /* Titlul "BiblioTech" de pe portal */
+  font-size: 4rem; /* Dimensiune mare, impunătoare */
+  color: #fffbeb; /* Culoare alb-cald */
+  text-shadow: 0 4px 15px rgba(0, 0, 0, 0.95), 0 0 30px rgba(245, 158, 11, 0.8); /* Umbră și strălucire aurie */
+  letter-spacing: 3px; /* Spațiere elegantă între litere */
+  margin-bottom: 10px; /* Spațiu sub titlu */
+} /* Închide .portal-title */
+
+.portal-subtitle { /* Subtitlul de pe portal */
+  font-size: 1.2rem; /* Dimensiune medie */
+  color: #fde68a; /* Culoare galben-aurie */
+  font-style: italic; /* Scris înclinat */
+  margin-bottom: 35px; /* Spațiu până la buton */
+  letter-spacing: 1px; /* Spațiere fină între litere */
+} /* Închide .portal-subtitle */
+
+.enter-library-btn { /* Butonul "Intră în Bibliotecă" */
+  background: linear-gradient(135deg, var(--roz-carte) 0%, #9f1239 50%, #831843 100%); /* Degrade rubiniu-roz */
+  color: #fffbeb; /* Text alb-crem */
+  border: 2px solid #fde047; /* Bordură aurie */
+  padding: 16px 38px; /* Dimensiune mare a butonului */
+  font-size: 1.25rem; /* Text lizibil și mare */
+  font-family: 'Georgia', serif; /* Font cu serife */
+  font-weight: bold; /* Text îngroșat */
+  border-radius: 50px; /* Formă de capsulă rotunjită */
+  cursor: pointer; /* Cursor mână la hover */
+  letter-spacing: 1.5px; /* Spațiere litere */
+  box-shadow: /* Umbră + aură roz + luciu interior */
+    0 10px 25px rgba(0, 0, 0, 0.8), /* Umbră sub buton */
+    0 0 25px rgba(213, 83, 126, 0.6), /* Strălucire roz */
+    inset 0 2px 5px rgba(255, 255, 255, 0.4); /* Luciu în partea de sus */
+  transition: all 0.3s ease; /* Animație lină la hover */
+  display: inline-flex; /* Aliniază cheia și textul pe același rând */
+  align-items: center; /* Centrează vertical cheia cu textul */
+  gap: 12px; /* Spațiu între cheie și text */
+} /* Închide .enter-library-btn */
+
+.enter-library-btn:hover { /* Starea butonului când pui mouse-ul pe el */
+  transform: translateY(-4px) scale(1.05); /* Se ridică ușor și se mărește */
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); /* Se schimbă în turcoaz smarald */
+  box-shadow: /* Crește strălucirea aurie */
+    0 15px 35px rgba(0, 0, 0, 0.9), /* Umbră mai adâncă */
+    0 0 40px rgba(254, 240, 138, 0.8); /* Halou auriu intens */
+} /* Închide hover-ul butonului */
+
+.btn-key-icon { /* Iconița cheie 🗝️ de pe buton */
+  font-size: 1.4rem; /* Dimensiunea cheii */
+  display: inline-block; /* Permite rotirea cheii */
+  transition: transform 0.4s ease; /* Animează rotirea */
+} /* Închide .btn-key-icon */
+
+.enter-library-btn:hover .btn-key-icon { /* Rotirea cheii când pui mouse-ul pe buton */
+  transform: rotate(45deg) scale(1.2); /* Rotește cheia la 45 de grade ca și cum ar descuia */
+} /* Închide hover-ul cheii */
+
+/* ========================================================= */
+/* 4. WRAPPERUL SITE-ULUI & TOP NAVBAR PROFESIONAL           */
+/* ========================================================= */
+.main-app-wrapper { /* Containerul întregului site de după uși */
+  position: relative; /* Context de poziționare */
+  z-index: 2; /* Deasupra fundalurilor fixe */
+  min-height: 100vh; /* Cel puțin cât înălțimea ecranului */
+  display: flex; /* Flexbox vertical ca să împingă subsolul (footer) jos */
+  flex-direction: column; /* Așază navbar, main și footer în coloană */
+  transform: scale(0.92); /* Inițial puțin micșorat în spatele ușilor */
+  opacity: 0; /* Inițial invizibil până se deschid ușile */
+  transition: transform 1.4s cubic-bezier(0.25, 1, 0.4, 1), opacity 1.2s ease; /* Animația de apariție a site-ului */
+  transform-origin: center top; /* Punctul de scalare sus-centru */
+} /* Închide .main-app-wrapper */
+
+.main-app-wrapper.app-entering { /* În timpul deschiderii ușilor */
+  transform: scale(1); /* Revine la scara 100% */
+  opacity: 1; /* Devine complet vizibil */
+} /* Închide .app-entering */
+
+.main-app-wrapper.app-entered { /* După ce s-a terminat intrarea în bibliotecă */
+  transform: none; /* Dezactivează transformarea ca să nu afecteze elementele sticky la scroll */
+  opacity: 1; /* Rămâne vizibil */
+} /* Închide .app-entered */
+
+.top-navbar { /* Bara de navigație de sus */
+  position: sticky; /* Rămâne lipită de partea de sus a ecranului când dai scroll */
+  top: 0; /* Lipită la 0px de sus */
+  z-index: 500; /* Peste restul paginii ca să nu intre cărțile peste ea la scroll */
+  background: var(--bg-navbar); /* Fundalul din variabila temei */
+  backdrop-filter: blur(16px); /* Efect de sticlă mată (încețoșează ce trece pe sub bară) */
+  border-bottom: 1px solid var(--border-warm); /* Linie aurie fină sub navbar */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.65); /* Umbră sub bara de navigație */
+} /* Închide .top-navbar */
+
+.navbar-inner { /* Containerul interior al bării de navigație */
+  max-width: 1180px; /* Lățime maximă de 1180px */
+  margin: 0 auto; /* Centrat pe mijlocul paginii */
+  padding: 12px 24px; /* Spațiere interioară sus/jos și stânga/dreapta */
+  display: flex; /* Așază logo-ul, căutarea și butoanele pe un rând */
+  align-items: center; /* Le centrează vertical */
+  justify-content: space-between; /* Le distribuie stânga - centru - dreapta */
+  gap: 20px; /* Spațiu minim între ele */
+  flex-wrap: wrap; /* Permite trecerea pe rândul următor pe ecrane mici */
+} /* Închide .navbar-inner */
+
+.navbar-brand { /* Zona logo-ului din stânga sus */
+  display: flex; /* Pune lumânarea și textul una lângă alta */
+  align-items: center; /* Centrate pe verticală */
+  gap: 14px; /* Spațiu de 14px între lumânare și text */
+} /* Închide .navbar-brand */
+
+.navbar-candle { /* Ajustare pentru lumânarea 3D din navbar */
+  transform: scale(0.85); /* O face puțin mai compactă pentru meniu */
+  margin-top: -6px; /* O aliniază optic cu textul */
+} /* Închide .navbar-candle */
+
+.brand-name { /* Numele "BiblioTech" din navbar */
+  display: block; /* Ocupă propriul rând */
+  font-size: 1.55rem; /* Mărimea fontului */
+  font-weight: bold; /* Text îngroșat */
+  color: #fde68a; /* Culoare aurie deschisă */
+  letter-spacing: 1.5px; /* Spațiere între litere */
+  text-shadow: 0 2px 8px rgba(245, 158, 11, 0.5); /* Strălucire caldă */
+  line-height: 1.1; /* Înălțime compactă a liniei */
+} /* Închide .brand-name */
+
+[data-theme="light"] .brand-name { /* Culoarea numelui pe tema luminoasă */
+  color: #78350f; /* Maro-arămiu închis */
+  text-shadow: none; /* Fără strălucire pe fundal alb */
+} /* Închide .brand-name pe light */
+
+.brand-tag { /* Subtitlul "Arhivă Digitală" de sub logo */
+  display: block; /* Rând nou sub nume */
+  font-size: 0.7rem; /* Scris mic */
+  text-transform: uppercase; /* Litere mari */
+  letter-spacing: 2px; /* Spațiere largă între litere */
+  color: var(--roz-inchis); /* Culoare roz de accent */
+  font-family: sans-serif; /* Font modern fără serife pentru lizibilitate la dimensiune mică */
+  font-weight: 700; /* Îngroșat */
+} /* Închide .brand-tag */
+
+.navbar-search { /* Containerul barei de căutare din meniu */
+  flex: 1; /* Se întinde să ocupe spațiul disponibil la mijloc */
+  max-width: 420px; /* Nu depășește 420px lățime */
+  min-width: 220px; /* Nu scade sub 220px lățime */
+  position: relative; /* Pentru poziționarea lupei și a butonului X înăuntru */
+  display: flex; /* Flexbox pentru aliniere */
+  align-items: center; /* Centrează vertical iconițele */
+} /* Închide .navbar-search */
+
+.search-icon { /* Iconița lupă 🔍 din stânga inputului */
+  position: absolute; /* Peste marginea stângă a inputului */
+  left: 14px; /* La 14px de marginea stângă */
+  font-size: 0.95rem; /* Dimensiunea lupei */
+  pointer-events: none; /* Click-ul trece prin lupă direct în input */
+  opacity: 0.8; /* Ușor semitransparentă */
+} /* Închide .search-icon */
+
+.navbar-search input { /* Câmpul propriu-zis în care tastezi căutarea */
+  width: 100%; /* Ocupă toată lățimea containerului */
+  padding: 10px 36px 10px 40px; /* Spațiu în stânga pentru lupă (40px) și în dreapta pentru X (36px) */
+  border-radius: 30px; /* Formă rotunjită de capsulă */
+  border: 1px solid var(--border-warm); /* Bordură fină aurie */
+  background: rgba(15, 8, 5, 0.55); /* Fundal închis semitransparent */
+  color: #fffbeb; /* Text alb-cald când tastezi */
+  font-family: sans-serif; /* Font curat pentru tastare */
+  font-size: 0.9rem; /* Dimensiunea textului */
+  outline: none; /* Elimină conturul albastru standard al browserului */
+  transition: all 0.25s ease; /* Animează strălucirea când dai click în el */
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5); /* Umbră interioară discretă */
+} /* Închide .navbar-search input */
+
+[data-theme="light"] .navbar-search input { /* Câmpul de căutare pe tema luminoasă */
+  background: rgba(255, 255, 255, 0.85); /* Fundal alb */
+  color: #29180e; /* Scris maro închis */
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1); /* Umbră interioară fină */
+} /* Închide inputul pe tema light */
+
+.navbar-search input::placeholder { /* Textul "Caută după titlu..." când inputul e gol */
+  color: rgba(254, 243, 199, 0.55); /* Crem semitransparent */
+} /* Închide placeholder-ul */
+
+[data-theme="light"] .navbar-search input::placeholder { /* Placeholder-ul pe tema luminoasă */
+  color: #8c6d53; /* Maro deschis */
+} /* Închide placeholder-ul pe light */
+
+.navbar-search input:focus { /* Când utilizatorul dă click în bara de căutare */
+  border-color: var(--roz-carte); /* Bordura devine roz */
+  box-shadow: 0 0 15px rgba(213, 83, 126, 0.4), inset 0 2px 6px rgba(0, 0, 0, 0.5); /* Halou roz în jurul barei */
+} /* Închide starea focus */
+
+.clear-search-btn { /* Butonul X care șterge textul căutat */
+  position: absolute; /* Poziționat în capătul drept al inputului */
+  right: 12px; /* La 12px de marginea dreaptă */
+  background: none; /* Fără fundal */
+  border: none; /* Fără bordură */
+  color: #fde68a; /* Culoare aurie */
+  cursor: pointer; /* Cursor mână */
+  font-size: 0.9rem; /* Dimensiunea X-ului */
+  opacity: 0.75; /* Ușor estompat */
+} /* Închide .clear-search-btn */
+
+.clear-search-btn:hover { /* La trecerea mouse-ului peste X */
+  opacity: 1; /* Devine complet opac */
+} /* Închide hover-ul pe X */
+
+.navbar-actions { /* Grupul din dreapta sus (statistici + buton temă) */
+  display: flex; /* Așezate pe un rând */
+  align-items: center; /* Centrate pe verticală */
+  gap: 14px; /* Spațiu între statistici și butonul de temă */
+} /* Închide .navbar-actions */
+
+.nav-stats-pills { /* Containerul celor două pastile cu statistici */
+  display: flex; /* Așezate una lângă alta */
+  gap: 8px; /* 8px distanță între ele */
+  font-family: sans-serif; /* Font fără serife */
+} /* Închide .nav-stats-pills */
+
+.stat-pill { /* Stilul pastilei cu numărul de cărți */
+  background: rgba(15, 118, 110, 0.25); /* Fundal turcoaz semitransparent */
+  border: 1px solid rgba(45, 212, 191, 0.4); /* Bordură turcoaz */
+  color: #fffbeb; /* Text deschis */
+  padding: 6px 13px; /* Spațiere interioară */
+  border-radius: 20px; /* Formă de pastilă */
+  font-size: 0.8rem; /* Mărime text */
+} /* Închide .stat-pill */
+
+[data-theme="light"] .stat-pill { /* Pastila pe tema luminoasă */
+  color: #064e3b; /* Text verde-închis */
+  background: rgba(13, 148, 136, 0.15); /* Fundal turcoaz pal */
+} /* Închide .stat-pill pe light */
+
+.stat-pill-pink { /* A doua pastilă (pentru cărțile citite/împrumutate) */
+  background: rgba(213, 83, 126, 0.25); /* Fundal roz semitransparent */
+  border-color: rgba(244, 114, 182, 0.5); /* Bordură roz */
+} /* Închide .stat-pill-pink */
+
+[data-theme="light"] .stat-pill-pink { /* Pastila roz pe tema luminoasă */
+  color: #831843; /* Text vișiniu închis */
+  background: rgba(213, 83, 126, 0.15); /* Fundal roz pal */
+} /* Închide .stat-pill-pink pe light */
+
+.theme-toggle { /* Butonul de schimbare a temei (Luminos / Întunecat) */
+  background: linear-gradient(135deg, rgba(45, 23, 15, 0.9), rgba(25, 12, 8, 0.95)); /* Fundal maro-închis */
+  color: #fef08a; /* Text galben-auriu */
+  border: 1px solid rgba(251, 191, 36, 0.5); /* Bordură aurie */
+  padding: 8px 16px; /* Spațiere interioară */
+  border-radius: 25px; /* Formă rotunjită */
+  cursor: pointer; /* Cursor mână */
+  font-size: 0.82rem; /* Dimensiune text */
+  font-weight: bold; /* Scris îngroșat */
+  font-family: sans-serif; /* Font fără serife */
+  transition: all 0.25s; /* Tranziție la hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); /* Umbră sub buton */
+} /* Închide .theme-toggle */
+
+.theme-toggle:hover { /* Butonul de temă când pui mouse-ul pe el */
+  background: var(--roz-carte); /* Devine roz */
+  color: #fff; /* Text alb */
+  border-color: #fff; /* Bordură albă */
+  transform: translateY(-2px); /* Se ridică cu 2px */
+} /* Închide hover-ul .theme-toggle */
+
+/* ========================================================= */
+/* 5. CONTAINERUL CENTRAL & HERO BANNER COMPACT              */
+/* ========================================================= */
+.site-main-container { /* Containerul care încadrează Hero Bannerul și Panoul cu rafturi */
+  max-width: 1180px; /* Lățime maximă 1180px */
+  width: 100%; /* Ocupă 100% pe ecrane mai mici */
+  margin: 0 auto; /* Centrat orizontal */
+  padding: 28px 24px 60px 24px; /* Spațiere sus, lateral și jos */
+  flex: 1; /* Ocupă tot spațiul vertical rămas până la subsol (footer) */
+} /* Închide .site-main-container */
+
+.app-header { /* Bannerul Hero de sus */
+  position: relative; /* Pentru poziționarea imaginii de fundal și a lumânărilor */
+  margin-bottom: 30px; /* Spațiu de 30px până la panoul cu rafturi */
+  padding: 42px 30px; /* Înălțimea interioară a bannerului */
+  border-radius: 16px; /* Colțuri rotunjite */
+  text-align: center; /* Text centrat */
+  color: white; /* Text alb */
+  box-shadow: /* Umbră exterioară, strălucire caldă și vignetă interioară */
+    0 20px 45px rgba(0, 0, 0, 0.75), /* Umbră sub banner */
+    0 0 35px rgba(245, 158, 11, 0.18), /* Aură caldă */
+    inset 0 0 60px rgba(0, 0, 0, 0.65); /* Umbră interioară pe margini */
+  border: 1px solid rgba(251, 191, 36, 0.45); /* Chenar auriu în jurul bannerului */
+  overflow: hidden; /* Taie marginile fotografiei care se mișcă în interior */
+} /* Închide .app-header */
+
+.header-bg-image { /* Fotografia cu cărți din interiorul bannerului Hero */
+  position: absolute; /* Pusă pe tot fundalul bannerului */
+  top: -8%; left: -8%; /* Cu 8% mai în afară ca să aibă loc să se miște fără să lase goluri */
+  width: 116%; height: 116%; /* Mai mare cu 16% decât bannerul */
+  background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2000&auto=format&fit=crop"); /* Imaginea bibliotecii */
+  background-size: cover; /* Acoperă toată suprafața */
+  background-position: center; /* Centrată */
+  z-index: 1; /* Primul strat din banner */
+  filter: brightness(0.68) contrast(1.12) sepia(0.22); /* Întunecată puțin ca să se citească scrisul alb */
+  animation: miscareCameraCozy 18s infinite alternate ease-in-out; /* Efect cinematic lent (Ken Burns) */
+} /* Închide .header-bg-image */
+
+@keyframes miscareCameraCozy { /* Animația fotografiei din banner */
+  0% { transform: scale(1) translate(0, 0); } /* Poziția inițială */
+  50% { transform: scale(1.06) translate(-1.5%, 1%); } /* Ușor zoom și deplasare spre stânga-jos */
+  100% { transform: scale(1.1) translate(1.5%, -1.5%); } /* Zoom și deplasare spre dreapta-sus */
+} /* Închide keyframes miscareCameraCozy */
+
+.header-warm-overlay { /* Stratul de lumină caldă peste fotografia bannerului */
+  position: absolute; /* Acoperă tot bannerul */
+  top: 0; left: 0; right: 0; bottom: 0; /* De la o margine la alta */
+  z-index: 2; /* Peste fotografie */
+  background: /* Lumină aurie în stânga-jos (unde sunt lumânările) și roz în dreapta-sus */
+    radial-gradient(circle at 15% 80%, rgba(251, 191, 36, 0.48) 0%, rgba(234, 88, 12, 0.22) 32%, transparent 60%), /* Lumina lumânărilor */
+    radial-gradient(circle at 85% 25%, rgba(213, 83, 126, 0.35) 0%, transparent 55%), /* Reflexie roz */
+    linear-gradient(to right, rgba(28, 14, 8, 0.82) 0%, rgba(35, 18, 12, 0.45) 50%, rgba(28, 14, 8, 0.82) 100%); /* Umbrire laterală */
+  animation: palpaireLuminaMasa 3.5s infinite alternate ease-in-out; /* Pâlpâie în ritmul lumânărilor */
+  pointer-events: none; /* Nu blochează mouse-ul */
+} /* Închide .header-warm-overlay */
+
+@keyframes palpaireLuminaMasa { /* Pâlpâirea luminii din banner */
+  0% { opacity: 0.85; } /* Mai domoală */
+  50% { opacity: 1; filter: brightness(1.12); } /* Mai luminoasă */
+  100% { opacity: 0.9; } /* Medie */
+} /* Închide keyframes palpaireLuminaMasa */
+
+.header-content { /* Containerul textului din bannerul Hero */
+  position: relative; /* Deasupra fundalului animat */
+  z-index: 4; /* Cel mai de sus strat din banner */
+  max-width: 720px; /* Lățime maximă pentru o lectură plăcută */
+  margin: 0 auto; /* Centrat */
+} /* Închide .header-content */
+
+.hero-eyebrow { /* Eticheta mică "✦ SALA DE LECTURĂ & COLECȚII ✦" */
+  display: inline-block; /* Se mulează pe lungimea textului */
+  font-family: sans-serif; /* Font fără serife */
+  font-size: 0.72rem; /* Dimensiune mică */
+  font-weight: bold; /* Îngroșat */
+  letter-spacing: 3px; /* Litere distanțate */
+  color: #fde047; /* Galben-auriu */
+  background: rgba(0, 0, 0, 0.45); /* Fundal negru semitransparent */
+  padding: 5px 14px; /* Spațiere în interiorul etichetei */
+  border-radius: 20px; /* Colțuri rotunjite */
+  border: 1px solid rgba(254, 240, 138, 0.35); /* Bordură aurie fină */
+  margin-bottom: 12px; /* Spațiu sub etichetă */
+} /* Închide .hero-eyebrow */
+
+.app-header h1 { /* Titlul mare "Sanctuarul Literar BiblioTech" */
+  font-size: 2.6rem; /* Mărimea titlului */
+  margin-bottom: 8px; /* Spațiu până la subtitlu */
+  color: #fffbeb; /* Culoare alb-crem */
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.95), 0 0 25px rgba(245, 158, 11, 0.75); /* Umbră puternică + strălucire caldă */
+  letter-spacing: 1.5px; /* Spațiere litere */
+} /* Închide .app-header h1 */
+
+.app-header p { /* Subtitlul din banner */
+  font-size: 1.08rem; /* Mărime medie */
+  color: #fef3c7; /* Culoare crem */
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.95); /* Umbră pentru lizibilitate */
+  font-style: italic; /* Scris cursiv */
+} /* Închide .app-header p */
+
+.header-candles-group { /* Grupul celor 3 lumânări din stânga-jos a bannerului */
+  position: absolute; /* Poziționat în colț */
+  bottom: 0; /* Lipit de baza bannerului */
+  left: 32px; /* La 32px de marginea stângă */
+  display: flex; /* Așază lumânările una lângă alta */
+  align-items: flex-end; /* Aliniate la bază */
+  gap: 10px; /* 10px spațiu între lumânări */
+  z-index: 3; /* Peste fundalul bannerului */
+  padding-bottom: 6px; /* Ridicate cu 6px de la marginea de jos */
+  filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.65)); /* Halou luminos în jurul grupului de lumânări */
+} /* Închide .header-candles-group */
+
+.candle-3d { /* Structura unei lumânări din banner */
+  position: relative; /* Context poziționare */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Pune flacăra sus, fitilul la mijloc și ceara jos */
+  align-items: center; /* Centrate pe aceeași axă */
+} /* Închide .candle-3d */
+
+.candle-tall .wax { width: 16px; height: 46px; } /* Dimensiunea cerii pentru lumânarea înaltă */
+.candle-medium .wax { width: 15px; height: 34px; } /* Dimensiunea cerii pentru lumânarea medie */
+.candle-short .wax { width: 18px; height: 22px; } /* Dimensiunea cerii pentru lumânarea scundă */
+
+.candle-3d .wax { /* Aspectul cilindrului de ceară */
+  background: linear-gradient(90deg, #fde68a 0%, #fffbeb 45%, #d97706 100%); /* Iluzie 3D cilindrică prin degrade orizontal */
+  border-radius: 3px 3px 0 0; /* Margini rotunjite sus */
+  box-shadow: inset 0 3px 6px rgba(255, 255, 255, 0.8), 0 4px 10px rgba(0, 0, 0, 0.7); /* Luciu de ceară sus și umbră jos */
+} /* Închide .wax */
+
+.candle-3d .wick { /* Fitilul lumânării */
+  width: 2px; /* Grosime 2px */
+  height: 5px; /* Lungime 5px */
+  background: #1c1917; /* Culoare neagră-arsă */
+} /* Închide .wick */
+
+.candle-3d .flame { /* Flacăra lumânării din banner */
+  width: 12px; /* Lățime 12px */
+  height: 20px; /* Înălțime 20px */
+  background: radial-gradient(ellipse at bottom, #ffffff 15%, #fef08a 50%, #f59e0b 80%, transparent 100%); /* Miez alb, mijloc galben, exterior portocaliu */
+  border-radius: 50% 50% 30% 30%; /* Formă de lacrimă / flacără */
+  box-shadow: 0 0 15px #fef08a, 0 0 30px #f59e0b, 0 0 50px #ea580c; /* Strălucire triplă în jurul flăcării */
+  transform-origin: bottom center; /* Se înclină pornind de la bază (de lângă fitil) */
+  animation: flacaraDans 1.6s infinite alternate ease-in-out; /* Animația de dans a flăcării */
+} /* Închide .flame */
+
+.candle-medium .flame { animation-delay: 0.4s; animation-duration: 1.9s; } /* Decalaj ca lumânarea medie să nu pâlpâie sincron cu prima */
+.candle-short .flame { animation-delay: 0.8s; animation-duration: 1.4s; } /* Decalaj pentru lumânarea mică */
+
+@keyframes flacaraDans { /* Mișcarea flăcărilor din banner */
+  0% { transform: scale(0.92) rotate(-4deg); } /* Înclinată ușor la stânga */
+  50% { transform: scale(1.1) rotate(3deg) translateY(-2px); } /* Se înalță și se înclină la dreapta */
+  100% { transform: scale(0.96) rotate(-2deg); } /* Revine aproape de centru */
+} /* Închide keyframes flacaraDans */
+
+.lumanare-realista { /* Containerul lumânării detaliate din Navbar */
+  position: relative; /* Bază pentru poziționarea pieselor componente */
+  display: inline-block; /* Afișată în linie cu textul */
+  width: 28px; /* Lățime 28px */
+  height: 54px; /* Înălțime 54px */
+  vertical-align: middle; /* Aliniată pe mijloc */
+  flex-shrink: 0; /* Nu se turtește pe ecrane mici */
+} /* Închide .lumanare-realista */
+
+.aura-lumanare { /* Haloul din jurul lumânării din Navbar */
+  position: absolute; /* Poziționat în jurul flăcării */
+  top: -12px; /* Mai sus cu 12px */
+  left: -16px; /* Mai la stânga cu 16px */
+  width: 60px; /* Diametru 60px */
+  height: 60px; /* Diametru 60px */
+  background: radial-gradient(circle, rgba(254, 240, 138, 0.55) 0%, rgba(245, 158, 11, 0.28) 45%, transparent 72%); /* Lumină circulară */
+  border-radius: 50%; /* Perfect rotundă */
+  pointer-events: none; /* Nu blochează click-ul */
+  animation: auraPuls 1.8s infinite alternate ease-in-out; /* Pulsează lin */
+} /* Închide .aura-lumanare */
+
+@keyframes auraPuls { /* Animația haloului din Navbar */
+  0% { transform: scale(0.9); opacity: 0.8; } /* Mai mic */
+  100% { transform: scale(1.25); opacity: 1; } /* Mai mare și mai luminos */
+} /* Închide keyframes auraPuls */
+
+.suport-auriu { /* Tăvița de alamă de la baza lumânării din Navbar */
+  position: absolute; /* Jos de tot */
+  bottom: 0; /* La 0px de bază */
+  left: 2px; /* Centrată orizontal */
+  width: 24px; /* Lățime 24px */
+  height: 5px; /* Înălțime 5px */
+  background: linear-gradient(90deg, #92400e, #fde047, #b45309); /* Metal auriu */
+  border-radius: 4px; /* Colțuri rotunjite */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.7); /* Umbră sub suport */
+} /* Închide .suport-auriu */
+
+.ceara-3d { /* Corpul de ceară al lumânării din Navbar */
+  position: absolute; /* Deasupra suportului auriu */
+  bottom: 4px; /* La 4px de bază */
+  left: 6px; /* Centrat pe suport */
+  width: 16px; /* Lățime 16px */
+  height: 28px; /* Înălțime 28px */
+  background: linear-gradient(90deg, #fef3c7 0%, #fffbeb 40%, #f59e0b 90%, #b45309 100%); /* Volum cilindric 3D */
+  border-radius: 3px 3px 1px 1px; /* Rotunjit sus */
+  box-shadow: /* Luciu alb sus și halou cald */
+    inset 0 3px 5px rgba(255, 255, 255, 0.9), /* Luciu */
+    0 0 15px rgba(254, 240, 138, 0.5); /* Strălucire */
+} /* Închide .ceara-3d */
+
+.picatura-ceara { /* Picătura de ceară care se prelinge pe lumânare */
+  position: absolute; /* Pe partea frontală a cerii */
+  bottom: 18px; /* La 18px de bază */
+  left: 9px; /* La 9px de stânga */
+  width: 4px; /* Lățime 4px */
+  height: 11px; /* Lungime 11px */
+  background: #fffbeb; /* Ceară alb-caldă */
+  border-radius: 2px 2px 4px 4px; /* Rotunjită jos ca o picătură */
+  z-index: 2; /* Peste corpul lumânării */
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25); /* Mică umbră de relief */
+} /* Închide .picatura-ceara */
+
+.fitil-3d { /* Fitilul lumânării din Navbar */
+  position: absolute; /* În vârful cerii */
+  bottom: 32px; /* La 32px de bază */
+  left: 13px; /* Centrat */
+  width: 2px; /* Lățime 2px */
+  height: 5px; /* Înălțime 5px */
+  background: #292524; /* Negru-cenușiu */
+} /* Închide .fitil-3d */
+
+.flacara-3d { /* Flacăra lumânării din Navbar și Portal */
+  position: absolute; /* Deasupra fitilului */
+  bottom: 35px; /* La 35px de bază */
+  left: 7px; /* Centrată */
+  width: 14px; /* Lățime 14px */
+  height: 24px; /* Înălțime 24px */
+  background: radial-gradient(ellipse at 50% 75%, #ffffff 25%, #fef08a 55%, #f59e0b 85%, #ea580c 100%); /* Culorile flăcării */
+  border-radius: 50% 50% 25% 25%; /* Formă de pară/flacără */
+  box-shadow: /* Triplu halou luminos în jur */
+    0 0 15px 4px #fef08a, /* Halou galben */
+    0 0 35px 10px #f59e0b, /* Halou portocaliu */
+    0 0 60px 16px rgba(244, 114, 182, 0.7); /* Halou roz-cald */
+  animation: flacaraPuternica 1.4s infinite alternate ease-in-out; /* Animația flăcării */
+  transform-origin: bottom center; /* Punctul de îndoire la bază */
+  z-index: 3; /* Deasupra fitilului */
+} /* Închide .flacara-3d */
+
+@keyframes flacaraPuternica { /* Mișcarea flăcării principale */
+  0% { transform: scale(0.94) rotate(-3deg); } /* Ușor micșorată și înclinată la stânga */
+  50% { transform: scale(1.12) rotate(3deg) translateY(-2px); } /* Alungită și înclinată la dreapta */
+  100% { transform: scale(1.02) rotate(-1deg); } /* Aproape dreaptă */
+} /* Închide keyframes flacaraPuternica */
+
+/* ========================================================= */
+/* 6. PANOUL CATALOGULUI & BARA DE CONTROL DE SITE REAL      */
+/* ========================================================= */
+.panel { /* Panoul mare în care stau filtrele și rafturile cu cărți */
+  background: var(--bg-panel); /* Culoare caldă de mahon semitransparent (din variabilă) */
+  backdrop-filter: blur(14px); /* Efect de sticlă mată peste imaginea de fundal */
+  padding: 32px 34px; /* Spațiere interioară */
+  border-radius: 16px; /* Colțuri rotunjite */
+  box-shadow: /* Umbră exterioară adâncă și lumină interioară discretă */
+    0 20px 50px rgba(0, 0, 0, 0.75), /* Umbră */
+    inset 0 0 40px rgba(245, 158, 11, 0.08); /* Strălucire interioară */
+  border: 1px solid var(--border-warm); /* Bordură aurie fină */
+} /* Închide .panel */
+
+.catalog-control-bar { /* Bara de sus a panoului cu tab-urile și ordonarea */
+  display: flex; /* Așază tab-urile în stânga și ordonarea în dreapta */
+  align-items: center; /* Aliniate pe verticală */
+  justify-content: space-between; /* Distribuite la capete */
+  flex-wrap: wrap; /* Trec pe rând nou pe mobil */
+  gap: 18px; /* Spațiu între grupuri */
+  padding-bottom: 22px; /* Spațiu până la linia despărțitoare */
+  margin-bottom: 35px; /* Spațiu sub linie până la primul raft */
+  border-bottom: 1px solid var(--border-warm); /* Linia aurie despărțitoare */
+} /* Închide .catalog-control-bar */
+
+.library-nav-tabs { /* Containerul celor 3 butoane de tab (Marea Sală, Disponibile, Împrumutate) */
+  display: flex; /* Așezate în linie */
+  gap: 12px; /* 12px între butoane */
+  flex-wrap: wrap; /* Trec pe rândul următor dacă ecranul e îngust */
+} /* Închide .library-nav-tabs */
+
+.lib-tab { /* Stilul unui buton de tab */
+  display: inline-flex; /* Aliniază iconița, textul și numărul pe un rând */
+  align-items: center; /* Centrate pe verticală */
+  gap: 10px; /* 10px între elemente */
+  padding: 11px 20px; /* Dimensiunea interioară a butonului */
+  border-radius: 12px; /* Colțuri rotunjite */
+  border: 1px solid rgba(251, 191, 36, 0.3); /* Bordură aurie discretă */
+  background: rgba(24, 12, 7, 0.65); /* Fundal lemn închis */
+  color: var(--text-main); /* Culoarea textului */
+  cursor: pointer; /* Cursor mână */
+  font-family: 'Georgia', serif; /* Font literar */
+  font-size: 0.95rem; /* Mărimea textului */
+  font-weight: bold; /* Îngroșat */
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); /* Tranziție fluidă */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35); /* Umbră sub tab */
+} /* Închide .lib-tab */
+
+[data-theme="light"] .lib-tab { /* Tab-urile pe tema luminoasă */
+  background: rgba(255, 245, 230, 0.9); /* Fundal crem */
+  color: #451a03; /* Scris maro închis */
+} /* Închide .lib-tab pe light */
+
+.lib-tab:hover { /* Când pui mouse-ul pe un tab */
+  transform: translateY(-2px); /* Se ridică ușor */
+  border-color: #fde047; /* Bordura devine mai strălucitoare */
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.25); /* Umbră caldă */
+} /* Închide hover-ul tab-ului */
+
+.lib-tab.tab-all.active { /* Când tab-ul "Marea Sală" este activ */
+  background: linear-gradient(135deg, #581c87 0%, #3b0764 100%); /* Degrade mov regal */
+  color: #fffbeb; /* Text alb-crem */
+  border-color: #fde047; /* Bordură aurie */
+  box-shadow: 0 6px 20px rgba(88, 28, 135, 0.6), 0 0 15px rgba(254, 240, 138, 0.3); /* Strălucire mov-aurie */
+} /* Închide .tab-all.active */
+
+.lib-tab.tab-available.active { /* Când tab-ul "Disponibile" este activ */
+  background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); /* Degrade turcoaz smarald */
+  color: #fffbeb; /* Text alb-crem */
+  border-color: #fde047; /* Bordură aurie */
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.55), 0 0 15px rgba(254, 240, 138, 0.3); /* Strălucire turcoaz */
+} /* Închide .tab-available.active */
+
+.lib-tab.tab-borrowed.active { /* Când tab-ul "Împrumutate" este activ */
+  background: linear-gradient(135deg, var(--roz-carte) 0%, #831843 100%); /* Degrade roz-rubiniu */
+  color: #fffbeb; /* Text alb-crem */
+  border-color: #fde047; /* Bordură aurie */
+  box-shadow: 0 6px 20px rgba(213, 83, 126, 0.55), 0 0 15px rgba(254, 240, 138, 0.3); /* Strălucire roz */
+} /* Închide .tab-borrowed.active */
+
+.tab-icon { /* Iconița din interiorul tab-ului */
+  font-size: 1.1rem; /* Dimensiune iconiță */
+} /* Închide .tab-icon */
+
+.tab-count { /* Bula cu numărul de cărți de pe tab */
+  font-family: sans-serif; /* Font clar pentru cifre */
+  font-size: 0.76rem; /* Scris mic */
+  background: rgba(0, 0, 0, 0.4); /* Fundal închis semitransparent */
+  color: #fde047; /* Cifre aurii */
+  padding: 2px 9px; /* Spațiere interioară */
+  border-radius: 20px; /* Formă rotunjită */
+  border: 1px solid rgba(254, 240, 138, 0.35); /* Contur auriu fin */
+} /* Închide .tab-count */
+
+.grupare-magic-switch { /* Containerul din dreapta pentru "Ordonează rafturile:" */
+  display: flex; /* Puse pe un rând */
+  align-items: center; /* Centrate pe verticală */
+  gap: 12px; /* 12px între etichetă și butoane */
+  font-family: sans-serif; /* Font fără serife */
+} /* Închide .grupare-magic-switch */
+
+.grupare-label { /* Textul "Ordonează rafturile:" */
+  font-size: 0.9rem; /* Dimensiune medie */
+  color: var(--text-muted); /* Culoare discretă */
+  font-style: italic; /* Înclinat */
+  font-family: 'Georgia', serif; /* Font cu serife */
+} /* Închide .grupare-label */
+
+.magic-pill-box { /* Cutia exterioară a comutatorului Gen / Stele */
+  display: inline-flex; /* Ține cele două butoane lipite */
+  background: rgba(18, 9, 5, 0.78); /* Fundal închis */
+  padding: 4px; /* Margine interioară de 4px */
+  border-radius: 30px; /* Formă de capsulă */
+  border: 1px solid var(--border-warm); /* Bordură aurie */
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6); /* Adâncitură interioară */
+} /* Închide .magic-pill-box */
+
+[data-theme="light"] .magic-pill-box { /* Cutia comutatorului pe tema luminoasă */
+  background: rgba(235, 220, 200, 0.85); /* Bej cald */
+} /* Închide .magic-pill-box pe light */
+
+.pill-option { /* Butoanele individuale "După Gen" și "După Stele" */
+  background: transparent; /* Fără fundal când nu sunt selectate */
+  border: none; /* Fără bordură */
+  color: var(--text-muted); /* Culoare text estompată */
+  padding: 7px 16px; /* Spațiere interioară */
+  border-radius: 25px; /* Rotunjite */
+  cursor: pointer; /* Cursor mână */
+  font-size: 0.84rem; /* Dimensiune text */
+  font-weight: bold; /* Îngroșat */
+  transition: all 0.3s ease; /* Tranziție lină */
+} /* Închide .pill-option */
+
+.pill-option.active { /* Opțiunea activă din comutator */
+  background: linear-gradient(135deg, var(--roz-carte), #9f1239); /* Fundal roz-rubiniu aprins */
+  color: #fffbeb; /* Text alb-cald */
+  box-shadow: 0 2px 12px rgba(213, 83, 126, 0.6), 0 0 8px rgba(254, 240, 138, 0.4); /* Strălucire */
+} /* Închide .pill-option.active */
+
+.sala-rafturi-viewport { /* Zona care conține toate rafturile și le dă perspectivă 3D */
+  position: relative; /* Context pentru valul luminos */
+  perspective: 1400px; /* Adâncimea 3D la schimbarea tab-urilor */
+  min-height: 320px; /* Înălțime minimă */
+} /* Închide .sala-rafturi-viewport */
+
+.portal-flash-wave { /* Valul scurt de lumină când treci dintr-o sală în alta */
+  position: absolute; /* Peste rafturi */
+  top: -20px; left: -20px; right: -20px; bottom: -20px; /* Acoperă toată zona */
+  pointer-events: none; /* Nu blochează mouse-ul */
+  z-index: 50; /* Deasupra rafturilor */
+  background: radial-gradient(circle at center, rgba(254, 240, 138, 0.45) 0%, rgba(213, 83, 126, 0.2) 45%, transparent 75%); /* Flash auriu-roz */
+  opacity: 0; /* Invizibil în repaus */
+  transform: scale(0.7); /* Micșorat în repaus */
+  transition: opacity 0.35s ease, transform 0.5s ease; /* Se extinde rapid când devine activ */
+} /* Închide .portal-flash-wave */
+
+.portal-flash-wave.active { /* Când are loc tranziția între filtre */
+  opacity: 1; /* Apare scurt */
+  transform: scale(1.15); /* Se extinde */
+} /* Închide .portal-flash-wave.active */
+
+.grupuri-genuri { /* Containerul care ține toate secțiunile de rafturi */
+  transform-style: preserve-3d; /* Păstrează spațiul 3D */
+  transform-origin: center 200px; /* Punctul central al animației */
+} /* Închide .grupuri-genuri */
+
+.wing-transition-out { /* Clasa aplicată când rafturile vechi se îndepărtează */
+  animation: zoomOutLibraryWing 0.36s cubic-bezier(0.55, 0.05, 0.67, 0.19) forwards; /* Animația de ieșire */
+} /* Închide .wing-transition-out */
+
+.wing-transition-in { /* Clasa aplicată când rafturile noi intră în ecran */
+  animation: zoomInLibraryWing 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards; /* Animația de intrare */
+} /* Închide .wing-transition-in */
+
+@keyframes zoomOutLibraryWing { /* Cum se îndepărtează sala veche */
+  0% { opacity: 1; transform: scale(1) translateZ(0) rotateX(0deg); filter: blur(0px) brightness(1); } /* Normală */
+  100% { opacity: 0; transform: scale(0.82) translateZ(-280px) rotateX(6deg); filter: blur(8px) brightness(1.5); } /* Se duce în spate și se estompează */
+} /* Închide keyframes zoomOutLibraryWing */
+
+@keyframes zoomInLibraryWing { /* Cum vine sala nouă spre tine */
+  0% { opacity: 0; transform: scale(1.18) translateZ(200px) rotateX(-5deg); filter: blur(10px) brightness(1.6); } /* Vine din față, luminoasă */
+  100% { opacity: 1; transform: scale(1) translateZ(0) rotateX(0deg); filter: blur(0px) brightness(1); } /* Se așază clar la locul ei */
+} /* Închide keyframes zoomInLibraryWing */
+
+/* ========================================================= */
+/* 7. RAFTURI DIN LAMBRIU DE MAHON CALD (Fără fundal negru!) */
+/* ========================================================= */
+.gen-sectiune { /* O secțiune completă: eticheta categoriei + raftul cu cărți */
+  margin-bottom: 48px; /* 48px distanță între două rafturi suprapuse */
+} /* Închide .gen-sectiune */
+
+.raft-eticheta-wrapper { /* Rândul de deasupra raftului cu titlul categoriei în stânga și numărul de volume în dreapta */
+  display: flex; /* Flexbox orizontal */
+  align-items: center; /* Aliniate vertical */
+  justify-content: space-between; /* Stânga și dreapta */
+  margin-bottom: -2px; /* Lipit de bordura de sus a raftului */
+  padding: 0 16px; /* 16px distanță față de capetele raftului */
+  position: relative; /* Context poziționare */
+  z-index: 5; /* Deasupra marginii raftului */
+} /* Închide .raft-eticheta-wrapper */
+
+.gen-titlu { /* Plăcuța cu numele genului (ex: "Fantezie 🕯️") */
+  color: #fffbeb; /* Scris alb-cald */
+  background: linear-gradient(135deg, #452312 0%, #2b1409 100%); /* Plăcuță din lemn de mahon închis */
+  display: inline-block; /* Lățime cât textul */
+  padding: 7px 24px; /* Spațiere interioară */
+  border-radius: 6px 6px 0 0; /* Rotunjită doar la colțurile de sus */
+  font-size: 0.9rem; /* Dimensiunea textului */
+  text-transform: uppercase; /* Litere mari */
+  letter-spacing: 2.5px; /* Spațiere litere */
+  border-top: 2px solid var(--roz-carte); /* Dunga roz de deasupra plăcuței */
+  border-left: 1px solid rgba(254, 240, 138, 0.25); /* Bordură fină stânga */
+  border-right: 1px solid rgba(254, 240, 138, 0.25); /* Bordură fină dreapta */
+  box-shadow: 0 -4px 12px rgba(0,0,0,0.5); /* Umbră deasupra plăcuței */
+  font-family: sans-serif; /* Font lizibil */
+  font-weight: 700; /* Îngroșat */
+} /* Închide .gen-titlu */
+
+.gen-titlu::after { /* Adaugă automat lumânarea 🕯️ după fiecare nume de categorie */
+  content: ' 🕯️'; /* Simbolul lumânării */
+  font-size: 1.25rem; /* Mărimea simbolului */
+  animation: lumanareStralucire 2s infinite alternate ease-in-out; /* Pulsează lumina */
+  display: inline-block; /* Permite scalarea */
+  vertical-align: middle; /* Centrată cu textul */
+  filter: drop-shadow(0 0 12px #fef08a) drop-shadow(0 0 20px #f472b6); /* Strălucire aurie și roz */
+} /* Închide .gen-titlu::after */
+
+.raft-vol-count { /* Eticheta din dreapta cu "X volume pe raft" */
+  font-family: sans-serif; /* Font fără serife */
+  font-size: 0.78rem; /* Scris mic */
+  color: #fde68a; /* Galben cald */
+  background: rgba(45, 23, 12, 0.85); /* Fundal maro */
+  padding: 4px 12px; /* Spațiere interioară */
+  border-radius: 12px 12px 0 0; /* Rotunjită sus */
+  border: 1px solid rgba(251, 191, 36, 0.3); /* Bordură aurie */
+  border-bottom: none; /* Fără bordură jos ca să se unească cu raftul */
+} /* Închide .raft-vol-count */
+
+@keyframes lumanareStralucire { /* Animația lumânării de lângă titlul raftului */
+  0% { opacity: 0.85; transform: scale(1); } /* Normală */
+  50% { opacity: 1; transform: scale(1.15); } /* Puțin mărită */
+  100% { opacity: 0.9; transform: scale(1.05); } /* Intermediară */
+} /* Închide keyframes lumanareStralucire */
+
+.raft-carti { /* Cutia raftului de bibliotecă în care stau cărțile */
+  display: flex; /* Așază cărțile pe orizontală una lângă alta */
+  gap: 10px; /* 10px spațiu între cărți */
+  padding: 42px 32px 0 32px; /* Spațiu sus și în părți, dar 0 jos ca să stea lipite pe scândură */
+  align-items: flex-end; /* Aliniază toate cărțile cu baza pe scândura de jos */
+  flex-wrap: wrap; /* Dacă sunt multe cărți, trec pe rândul următor */
+  overflow-x: visible; /* Permite cărților deschise să iasă în afara cadrului */
+  background: /* Fundalul din spatele cărților: lambriu de mahon + lumini de sfeșnice */
+    radial-gradient(circle at 12% 55%, rgba(251, 191, 36, 0.38) 0%, rgba(234, 88, 12, 0.16) 35%, transparent 60%), /* Sfeșnic stânga */
+    radial-gradient(circle at 88% 55%, rgba(244, 114, 182, 0.3) 0%, rgba(251, 191, 36, 0.15) 35%, transparent 60%), /* Sfeșnic dreapta */
+    linear-gradient(to top, rgba(245, 158, 11, 0.22) 0%, transparent 35%), /* Reflexie caldă pe scândura de jos */
+    repeating-linear-gradient( /* Scândurile verticale de lemn din spatele raftului */
+      90deg, /* Orientare verticală */
+      rgba(72, 38, 21, 0.92) 0px, /* Scândură mahon */
+      rgba(86, 46, 26, 0.92) 38px, /* Lumină pe scândură */
+      rgba(52, 26, 14, 0.96) 40px, /* Îmbinarea întunecată dintre scânduri */
+      rgba(68, 35, 19, 0.92) 80px /* Următoarea scândură */
+    );
+  border-bottom: 28px solid #361b0d; /* Polita groasă de lemn (28px) pe care stau cărțile */
+  border-top: 5px solid #7c4726; /* Marginea de sus a raftului */
+  border-left: 6px solid #4a2813; /* Peretele lateral stâng al raftului */
+  border-right: 6px solid #4a2813; /* Peretele lateral drept al raftului */
+  box-shadow: /* Umbra raftului pe perete + iluminarea interioară */
+    0 22px 35px -8px rgba(0, 0, 0, 0.8), /* Umbră sub raft */
+    inset 0 -10px 18px rgba(251, 191, 36, 0.22), /* Lumină caldă la baza cărților */
+    inset 0 12px 22px rgba(25, 10, 4, 0.65); /* Umbră sub tavanul raftului */
+  border-radius: 6px; /* Colțuri ușor rotunjite */
+  min-height: 295px; /* Înălțimea minimă a unui raft */
+  position: relative; /* Pentru poziționarea baghetei aurii de pe scândură */
+} /* Închide .raft-carti */
+
+.raft-carti::before { /* Bagheta subțire aurie încrustată pe polița de lemn a raftului */
+  content: ''; /* Element decorativ gol */
+  position: absolute; /* Poziționat pe polița de jos */
+  bottom: -28px; /* La baza bordurii de 28px */
+  left: 0; right: 0; /* De la un capăt la altul */
+  height: 4px; /* Grosime de 4px */
+  background: linear-gradient(90deg, #78350f, #fde047, #d97706, #fde047, #78350f); /* Metal auriu strălucitor */
+  z-index: 20; /* Peste lemn */
+  box-shadow: 0 0 12px rgba(254, 240, 138, 0.45); /* Strălucire aurie */
+} /* Închide .raft-carti::before */
+
+/* ========================================================= */
+/* 8. CĂRȚILE 3D + VARIAȚIA DE ÎNĂLȚIME (Fără strâmbat)      */
+/* ========================================================= */
+.book-shelf-slot { /* Spațiul pe care îl ocupă o carte pe raft */
+  width: 54px; /* Lățimea cotorului pe raft */
+  height: 225px; /* Înălțimea de bază a cărții */
+  position: relative; /* Context pentru volumul 3D */
+  perspective: 2200px; /* Perspectiva 3D pentru deschiderea coperții */
+  cursor: pointer; /* Cursor mână când treci peste carte */
+  z-index: 1; /* Nivel normal când nu ai mouse-ul pe ea */
+  transform-origin: bottom center; /* Variația de înălțime pleacă de la baza raftului în sus */
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); /* Tranziție lină la hover */
+} /* Închide .book-shelf-slot */
+
+.raft-carti .book-shelf-slot:nth-child(4n + 1) { /* Fiecare a 1-a, a 5-a, a 9-a carte de pe raft */
+  transform: scaleY(1.05) scaleX(1.02); /* Este cu 5% mai înaltă și cu 2% mai groasă (stă perfect dreaptă) */
+} /* Închide 4n + 1 */
+
+.raft-carti .book-shelf-slot:nth-child(4n + 2) { /* Fiecare a 2-a, a 6-a, a 10-a carte de pe raft */
+  transform: scaleY(0.93) scaleX(0.96); /* Este cu 7% mai scundă și puțin mai subțire (stă perfect dreaptă) */
+} /* Închide 4n + 2 */
+
+.raft-carti .book-shelf-slot:nth-child(4n + 3) { /* Fiecare a 3-a, a 7-a, a 11-a carte de pe raft */
+  transform: scaleY(1.07) scaleX(1.03); /* Este cu 7% mai înaltă și cu 3% mai groasă */
+  margin-left: 3px; /* Mic spațiu suplimentar în stânga */
+} /* Închide 4n + 3 */
+
+.raft-carti .book-shelf-slot:nth-child(5n) { /* Fiecare a 5-a, a 10-a carte */
+  transform: scaleY(0.96) scaleX(0.98); /* Ușor mai scundă, fără nicio înclinare */
+  margin-left: 2px; /* 2px marjă stânga */
+  margin-right: 2px; /* 2px marjă dreapta */
+} /* Închide 5n */
+
+.raft-carti .book-shelf-slot:hover, /* Când utilizatorul pune mouse-ul pe carte */
+.raft-carti .book-shelf-slot:active { /* Sau dă click pe ea */
+  z-index: 200; /* Trece în fața tuturor celorlalte cărți de pe raft */
+  transform: scale(1) !important; /* Revine la proporția 1:1 ca să se deschidă impecabil */
+} /* Închide hover-ul slotului */
+
+.book-volume { /* Ansamblul 3D al cărții (cotor + pagini + coperți) */
+  position: absolute; /* Poziționat în interiorul slotului */
+  top: 0; left: 0; /* Aliniat sus-stânga */
+  width: 190px; /* Lățimea unei pagini/coperți întregi */
+  height: 225px; /* Înălțimea cărții */
+  transform-style: preserve-3d; /* Esențial: menține piesele cărții în spațiul 3D */
+  transform-origin: left center; /* Punctul de rotație pe muchia stângă */
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease; /* Animația de ieșire din raft */
+  transform: rotateY(-90deg) translateZ(0px); /* În repaus stă întoarsă la -90°, arătând doar cotorul */
+} /* Închide .book-volume */
+
+.book-shelf-slot:hover .book-volume, /* Când pui mouse-ul pe carte, volumul iese din raft */
+.book-shelf-slot:active .book-volume { /* Și pe ecrane tactile la atingere */
+  transform: rotateY(0deg) translateZ(75px) translateX(110px) translateY(-14px) rotateX(5deg); /* Se întoarce cu fața, iese în față și se centrează */
+  filter: /* Umbră 3D puternică sub carte + aură caldă */
+    drop-shadow(-25px 30px 28px rgba(0,0,0,0.95)) /* Umbra neagră proiectată pe raft */
+    drop-shadow(0 0 25px rgba(245, 158, 11, 0.3)); /* Halou auriu în jurul cărții deschise */
+} /* Închide hover-ul .book-volume */
+
+.book-spine { /* Cotorul cărții (vizibil când cartea e pe raft) */
+  position: absolute; /* Poziționat pe latura stângă a volumului */
+  top: 0; left: 0; /* Sus-stânga */
+  width: 54px; /* Lățimea cotorului */
+  height: 225px; /* Înălțimea cotorului */
+  background: /* Piele verde-turcoaz cu reflexie de lumină pe mijloc */
+    radial-gradient(circle at 50% 20%, rgba(254, 240, 138, 0.18), transparent 60%), /* Pată de lumină sus */
+    linear-gradient(90deg, #03221f 0%, #0d7c72 35%, #11998e 50%, #0d7c72 65%, #03221f 100%); /* Curbură cilindrică */
+  transform-origin: left center; /* Se pliază din stânga */
+  transform: rotateY(90deg); /* Pus perpendicular pe copertă (la 90 de grade) */
+  display: flex; /* Flexbox pentru centrarea textului pe cotor */
+  flex-direction: column; /* Orientare verticală */
+  align-items: center; /* Centrat pe lățimea cotorului */
+  justify-content: space-between; /* Distribuie elementele pe cotor */
+  padding: 16px 0; /* Spațiu sus și jos */
+  border-radius: 4px 0 0 4px; /* Rotunjire fină a muchiei */
+  box-shadow: /* Umbre de volum + capete metalice aurii sus și jos */
+    inset -6px 0 12px rgba(0,0,0,0.8), /* Umbră interioară dreapta */
+    inset 3px 0 6px rgba(255,255,255,0.25), /* Luciu stânga */
+    inset 0 8px 0 #b45309, /* Feronerie aurie sus */
+    inset 0 -8px 0 #b45309; /* Feronerie aurie jos */
+  border: 1px solid rgba(254, 240, 138, 0.4); /* Contur fin auriu */
+  overflow: hidden; /* Nu lasă textul să iasă din cotor */
+} /* Închide .book-spine */
+
+.raft-carti .book-shelf-slot:nth-child(3n) .book-spine { /* Fiecare a 3-a carte */
+  filter: brightness(1.08) contrast(1.05); /* Are o nuanță puțin mai deschisă pe cotor */
+} /* Închide variația 3n */
+
+.raft-carti .book-shelf-slot:nth-child(4n + 2) .book-spine { /* Fiecare a 2-a carte din grup de 4 */
+  filter: brightness(0.92); /* Are o nuanță puțin mai închisă (piele veche) */
+} /* Închide variația 4n + 2 */
+
+.citita .book-spine { /* Cotorul cărților bifate ca Împrumutate/Citite */
+  background: /* Piele roz-rubinie */
+    radial-gradient(circle at 50% 20%, rgba(254, 240, 138, 0.2), transparent 60%), /* Luciu */
+    linear-gradient(90deg, #420b1f 0%, var(--roz-carte) 35%, #ec6b96 50%, var(--roz-carte) 65%, #420b1f 100%); /* Cilindru roz */
+} /* Închide .citita .book-spine */
+
+.book-spine::before { /* Chenarul fin aurit ștanțat pe cotor */
+  content: ''; /* Element decorativ */
+  position: absolute; /* În interiorul cotorului */
+  top: 10px; bottom: 10px; left: 5px; right: 5px; /* La 5px de marginile laterale */
+  border: 1px solid rgba(254, 240, 138, 0.35); /* Linia aurie ștanțată */
+  pointer-events: none; /* Fără interacțiune */
+} /* Închide .book-spine::before */
+
+.spine-ribs { /* Containerul pentru cele 4 nervuri orizontale de pe cotor */
+  width: 100%; /* Cât lățimea cotorului */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Una sub alta */
+  justify-content: space-between; /* Distribuite egal pe înălțimea cotorului */
+  height: 100%; /* Toată înălțimea */
+  position: absolute; /* Peste fundalul cotorului */
+  top: 0; left: 0; /* De sus */
+  padding: 26px 0; /* Spațiu față de capete */
+  pointer-events: none; /* Fără interacțiune */
+} /* Închide .spine-ribs */
+
+.spine-ribs span { /* Fiecare nervură metalică aurie de pe cotor */
+  width: 100%; /* Traversează tot cotorul */
+  height: 6px; /* 6px grosime */
+  background: linear-gradient(180deg, #fde047 0%, #b45309 55%, #27150b 100%); /* Relief metalic auriu */
+  border-top: 1px solid #fffbeb; /* Dungă de luciu sus */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.85); /* Umbră sub nervură */
+} /* Închide .spine-ribs span */
+
+.spine-text { /* Titlul scris vertical pe cotorul cărții */
+  writing-mode: vertical-rl; /* Scrie textul pe verticală */
+  text-orientation: mixed; /* Orientare naturală a literelor */
+  transform: rotate(180deg); /* Întors ca să se citească de jos în sus, ca pe cărțile reale */
+  color: #fef08a; /* Scris cu foiță de aur */
+  font-weight: 700; /* Îngroșat */
+  font-size: 0.85rem; /* Mărimea fontului */
+  letter-spacing: 0.8px; /* Spațiere litere */
+  white-space: nowrap; /* Pe un singur rând vertical */
+  overflow: hidden; /* Taie textul dacă e prea lung */
+  text-overflow: ellipsis; /* Pune "..." dacă titlul e foarte lung */
+  max-height: 155px; /* Lungimea maximă a textului pe cotor */
+  text-shadow: 1px 2px 3px #000, 0 0 10px rgba(245, 158, 11, 0.6); /* Umbră neagră pentru contrast */
+  z-index: 2; /* Peste nervurile cotorului */
+  font-family: 'Georgia', serif; /* Font clasic */
+} /* Închide .spine-text */
+
+.book-front-cover { /* Coperta din față (care se deschide spre stânga) */
+  position: absolute; /* Suprapusă peste paginile din dreapta când e închisă */
+  top: 0; left: 0; /* Aliniată la cotor */
+  width: 190px; /* Lățime 190px */
+  height: 225px; /* Înălțime 225px */
+  transform-origin: left center; /* Balamaua coperții este pe latura stângă (lângă cotor) */
+  transform-style: preserve-3d; /* Păstrează cele două fețe ale coperții în 3D */
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* Animația lină de deschidere a coperții */
+  transform: rotateY(0deg); /* Închisă la 0 grade în repaus */
+  z-index: 5; /* Deasupra paginilor interioare */
+} /* Închide .book-front-cover */
+
+.book-shelf-slot:hover .book-front-cover, /* Când pui mouse-ul pe carte, coperta se deschide */
+.book-shelf-slot:active .book-front-cover { /* Și la click/atingere */
+  transform: rotateY(-162deg); /* Se deschide larg la -162 de grade spre stânga, arătând pagina din stânga */
+} /* Închide deschiderea coperții */
+
+.book-shelf-slot:hover .book-front-cover::after { /* Stelele aurii care plutesc deasupra cărții deschise */
+  content: attr(data-stele); /* Preia exact numărul de stele din atributul data-stele trimis din CarteCard.jsx */
+  position: absolute; /* Poziționate deasupra marginii de sus */
+  top: -24px; /* Cu 24px deasupra coperții */
+  left: 20px; /* La 20px de la margine */
+  color: #fde047; /* Culoare galben-aurie */
+  font-size: 1.15rem; /* Mărimea stelelor */
+  letter-spacing: 8px; /* Spațiu între stele */
+  transform: scaleX(-1); /* Întoarce textul în oglindă pentru a compensa rotația de -162° a coperții */
+  text-shadow: 0 0 10px #fef08a, 0 0 20px #f59e0b, 0 0 30px #f472b6; /* Strălucire puternică */
+  animation: stelePlutitoare 1.2s ease-in-out infinite alternate; /* Plutire sus-jos */
+  pointer-events: none; /* Nu încurcă mouse-ul */
+  white-space: nowrap; /* Toate stelele pe un singur rând */
+} /* Închide stelele plutitoare */
+
+@keyframes stelePlutitoare { /* Mișcarea stelelor deasupra cărții */
+  0% { opacity: 0.75; transform: scaleX(-1) translateY(3px) scale(0.95); } /* Mai jos */
+  100% { opacity: 1; transform: scaleX(-1) translateY(-6px) scale(1.1); } /* Se ridică și strălucesc */
+} /* Închide keyframes stelePlutitoare */
+
+.cover-outside, .cover-inside { /* Reguli comune pentru fața și dosul coperții */
+  position: absolute; /* Suprapuse spate în spate */
+  top: 0; left: 0; /* Aliniate la colțul stânga-sus */
+  width: 100%; height: 100%; /* Ocupă toată suprafața coperții */
+  backface-visibility: hidden; /* Ascunde fața care este întoarsă cu spatele la cameră */
+  border-radius: 0 6px 6px 0; /* Rotunjite la colțurile din dreapta */
+} /* Închide .cover-outside, .cover-inside */
+
+.cover-outside { /* Fața exterioară a coperții (piele + chenar dublu auriu) */
+  background: /* Piele verde-smarald cu iluminare centrală */
+    radial-gradient(circle at 30% 30%, #15998e 0%, #0b5e56 55%, #032623 100%);
+  padding: 24px 18px; /* Spațiere interioară */
+  color: #fffbeb; /* Scris alb-cald */
+  display: flex; /* Flexbox pentru centrarea titlului */
+  flex-direction: column; /* În coloană */
+  align-items: center; /* Centrat orizontal */
+  justify-content: center; /* Centrat vertical */
+  text-align: center; /* Text aliniat pe mijloc */
+  box-shadow: /* Creează chenarul dublu aurit ștanțat pe copertă */
+    inset 0 0 0 6px rgba(0, 0, 0, 0.25), /* Adâncitură lângă margine */
+    inset 0 0 0 8px #fde047, /* Primul chenar auriu */
+    inset 0 0 0 12px rgba(0, 0, 0, 0.35), /* Spațiu între chenare */
+    inset 0 0 0 13px rgba(254, 240, 138, 0.6), /* Al doilea chenar fin auriu */
+    10px 0 25px rgba(0,0,0,0.85); /* Umbra coperții */
+  border: 2px solid #b45309; /* Cantul exterior auriu al coperții */
+} /* Închide .cover-outside */
+
+.citita .cover-outside { /* Coperta exterioară pentru cărțile împrumutate/citite */
+  background: /* Piele roz-rubinie */
+    radial-gradient(circle at 30% 30%, #e66692 0%, var(--roz-carte) 50%, #4c0d25 100%); 
+} /* Închide .citita .cover-outside */
+
+.cover-inside { /* Pagina din stânga (vizibilă după ce coperta se deschide) */
+  background: /* Textură de pergament vechi cu linii fine de caiet/manuscris */
+    radial-gradient(circle at center, #fffbeb 35%, #f3dfc1 80%, #d8ba89 100%), /* Pergament îngălbenit */
+    repeating-linear-gradient(transparent 0px, transparent 17px, rgba(146, 64, 14, 0.08) 18px); /* Liniile orizontale fine */
+  transform: rotateY(180deg); /* Pusă pe spatele coperții exterioare ca să se vadă drept când se deschide la -162° */
+  border-left: 6px solid #78350f; /* Marginea de piele din exterior */
+  border-top: 3px solid #b45309; /* Marginea de sus */
+  border-bottom: 3px solid #b45309; /* Marginea de jos */
+  box-shadow: /* Umbra de la îndoitura cotorului (în dreapta paginii stângi) */
+    inset -18px 0 30px rgba(69, 26, 3, 0.45), /* Umbra cotorului */
+    inset 0 0 20px rgba(146, 64, 14, 0.3); /* Patină veche pe margini */
+  padding: 12px 14px 12px 12px; /* Spațiere până la chenarul interior */
+  display: flex; /* Flexbox pentru încadrarea chenarului */
+  flex-direction: column; /* În coloană */
+  justify-content: center; /* Centrat pe verticală */
+} /* Închide .cover-inside */
+
+.left-page-frame { /* Chenarul dublu de pe pagina stângă (acum centrează totul pe mijlocul paginii) */
+  width: 100%; /* Toată lățimea disponibilă */
+  height: 100%; /* Toată înălțimea disponibilă */
+  border: 2px double rgba(146, 64, 14, 0.45); /* Chenar dublu de manuscris */
+  border-radius: 3px; /* Colțuri discret rotunjite */
+  padding: 16px 10px; /* Spațiere interioară */
+  display: flex; /* Flexbox pentru elementele din pagină */
+  flex-direction: column; /* Așază Categoria și Evaluarea una sub alta */
+  align-items: center; /* Le centrează pe orizontală */
+  justify-content: center; /* Le centrează exact pe mijlocul paginii */
+  gap: 20px; /* Spațiu curat de 20px între Categorie și Evaluare pe mijlocul paginii */
+  text-align: center; /* Text aliniat pe centru */
+  background: rgba(255, 251, 235, 0.35); /* Luminozitate discretă în interiorul chenarului */
+} /* Închide .left-page-frame */
+
+.left-page-category { /* Blocul cu "Colecția" și numele categoriei de pe pagina stângă */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Eticheta deasupra numelui categoriei */
+  align-items: center; /* Centrate */
+  width: 100%; /* Toată lățimea chenarului */
+  border-bottom: 2px double rgba(146, 64, 14, 0.35); /* Linie dublă decorativă sub categorie */
+  padding-bottom: 12px; /* Spațiu până la linia despărțitoare */
+} /* Închide .left-page-category */
+
+.cat-tiny-label { /* Textul mic "COLECȚIA" */
+  font-size: 0.58rem; /* Dimensiune mică */
+  text-transform: uppercase; /* Litere mari */
+  letter-spacing: 2px; /* Spațiere litere */
+  color: #92400e; /* Maro-chihlimbar */
+  font-family: sans-serif; /* Font fără serife */
+  font-weight: bold; /* Îngroșat */
+  margin-bottom: 3px; /* Mic spațiu sub etichetă */
+} /* Închide .cat-tiny-label */
+
+.cat-name { /* Numele categoriei (ex: "Fantezie", "Istorie") pe pagina stângă */
+  font-size: 0.95rem; /* Scris vizibil și clar pe mijlocul paginii */
+  font-weight: 800; /* Foarte îngroșat */
+  color: var(--turcuaz); /* Turcoaz pentru cărțile disponibile */
+  font-family: 'Georgia', serif; /* Font cu serife */
+  letter-spacing: 0.5px; /* Spațiere fină */
+} /* Închide .cat-name */
+
+.citita .cat-name { /* Numele categoriei când cartea este împrumutată */
+  color: var(--roz-carte); /* Devine roz-rubiniu */
+} /* Închide .citita .cat-name */
+
+.left-page-rating { /* Blocul cu "Evaluare (X/5)" și stelele de pe mijlocul paginii stângi */
+  width: 100%; /* Toată lățimea chenarului */
+  padding-top: 2px; /* Spațiere sus */
+} /* Închide .left-page-rating */
+
+.cover-content { /* Conținutul de pe fața exterioară a coperții */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Titlu -> Ornament -> Autor */
+  align-items: center; /* Centrate orizontal */
+  justify-content: center; /* Centrate vertical */
+  height: 100%; /* Toată înălțimea coperții */
+  padding: 6px; /* Spațiere interioară */
+} /* Închide .cover-content */
+
+.cover-ornament { /* Linia aurie despărțitoare de pe coperta exterioară */
+  width: 75px; /* Lungime 75px */
+  height: 2px; /* Grosime 2px */
+  background: linear-gradient(90deg, transparent, #fde047, transparent); /* Linie aurie pierdută la capete */
+  margin: 10px 0; /* 10px spațiu sus și jos */
+  position: relative; /* Pentru poziționarea rombului central */
+} /* Închide .cover-ornament */
+
+.cover-ornament::after { /* Simbolul ❖ din mijlocul liniei de pe copertă */
+  content: '❖'; /* Simbolul romb ornamental */
+  position: absolute; /* Peste mijlocul liniei */
+  top: -8px; /* Centrat vertical pe linie */
+  left: 50%; /* La jumătatea liniei */
+  transform: translateX(-50%); /* Centrat exact */
+  color: #fde047; /* Culoare aurie */
+  font-size: 0.75rem; /* Mărime simbol */
+} /* Închide .cover-ornament::after */
+
+.book-title { /* Titlul cărții de pe coperta exterioară */
+  font-size: 1.05rem; /* Dimensiune titlu */
+  margin-bottom: 4px; /* Spațiu sub titlu */
+  font-weight: 700; /* Îngroșat */
+  color: #fffbeb; /* Alb-crem */
+  text-shadow: 0 2px 4px rgba(0,0,0,0.95); /* Umbră puternică */
+  line-height: 1.25; /* Înălțimea rândului */
+  font-family: 'Georgia', serif; /* Font literar */
+} /* Închide .book-title */
+
+.book-author { /* Autorul cărții de pe coperta exterioară */
+  font-size: 0.8rem; /* Dimensiune mai mică */
+  font-style: italic; /* Scris cursiv */
+  color: #fde68a; /* Galben-auriu */
+  font-family: 'Georgia', serif; /* Font literar */
+} /* Închide .book-author */
+
+.book-inside-pages { /* Pagina din dreapta (și blocul 3D de foi suprapuse) */
+  position: absolute; /* Stă la baza cărții sub copertă */
+  top: 4px; /* Cu 4px mai jos decât marginea coperții (ca la o carte reală) */
+  left: 0px; /* Lipită de cotor în stânga */
+  width: 184px; /* Cu 6px mai îngustă decât coperta */
+  height: 217px; /* Cu 8px mai scundă decât coperta */
+  background: /* Textură de pergament vechi cu rânduri fine */
+    radial-gradient(circle at center, rgba(255, 251, 235, 0.92) 30%, rgba(243, 223, 193, 0.95) 78%, rgba(210, 176, 126, 0.98) 100%), /* Hârtie veche */
+    repeating-linear-gradient(transparent 0px, transparent 17px, rgba(146, 64, 14, 0.08) 18px); /* Liniile paginii */
+  border-radius: 0 5px 5px 0; /* Rotunjită la colțurile din dreapta */
+  border-right: 7px solid #d6be96; /* Cantul gros de foi în partea dreaptă */
+  border-top: 3px solid #e6d3b3; /* Cantul de foi sus */
+  border-bottom: 4px solid #bfa375; /* Cantul de foi jos */
+  box-shadow: /* Umbra de la îndoitura cotorului + trepte de pagini în dreapta */
+    inset 22px 0 28px -8px rgba(69, 26, 3, 0.55), /* Umbra adâncă lângă cotor */
+    inset 0 0 18px rgba(120, 53, 15, 0.35), /* Margini arse de vreme */
+    3px 0 0 #ccb082, /* Treapta 1 de foi pe cantul drept */
+    6px 0 0 #b89b6c, /* Treapta 2 de foi pe cantul drept */
+    10px 8px 20px rgba(0,0,0,0.75); /* Umbra blocului de pagini */
+  z-index: 2; /* Sub coperta față */
+  padding: 16px 14px 14px 20px; /* Spațiere interioară pe pagină */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Titlul sus, butoanele jos */
+  justify-content: space-between; /* Împinge titlul sus și acțiunile jos */
+  color: #291507; /* Culoare cerneală veche maro-închis */
+  font-family: 'Georgia', serif; /* Font literar */
+} /* Închide .book-inside-pages */
+
+.book-inside-pages::before { /* Chenarul fin decorativ de pe pagina din dreapta */
+  content: ''; /* Element gol */
+  position: absolute; /* În interiorul paginii */
+  top: 7px; bottom: 7px; left: 12px; right: 7px; /* Urmărește marginile paginii */
+  border: 1px solid rgba(146, 64, 14, 0.35); /* Linia fină maro-aurie */
+  pointer-events: none; /* Nu blochează click-urile pe butoane */
+} /* Închide .book-inside-pages::before */
+
+.book-inside-pages::after { /* Semnul de carte din panglică care iese sub pagină când deschizi cartea */
+  content: ''; /* Element decorativ */
+  position: absolute; /* La baza paginii lângă cotor */
+  bottom: -4px; /* La marginea de jos */
+  left: 26px; /* La 26px de cotor */
+  width: 18px; /* Lățimea panglicii */
+  height: 38px; /* Lungimea panglicii */
+  background: linear-gradient(180deg, #78350f, var(--roz-carte), #5b132e); /* Culoare catifea vișinie */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 78%, 0 100%); /* Vârful decupat în V (coadă de rândunică) */
+  border-left: 1px dashed #fde047; /* Cusătură aurie stânga */
+  border-right: 1px dashed #fde047; /* Cusătură aurie dreapta */
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s; /* Coboară lin după ce începe deschiderea cărții */
+  transform: translateY(-25px); /* Ascuns între pagini când cartea e închisă */
+  z-index: -1; /* Sub blocul de pagini */
+} /* Închide .book-inside-pages::after */
+
+.book-shelf-slot:hover .book-inside-pages::after { /* Când deschizi cartea cu mouse-ul */
+  transform: translateY(28px); /* Panglica alunecă în jos și atârnă sub carte */
+} /* Închide hover-ul panglicii */
+
+.interior-header { /* Zona de sus a paginii din dreapta */
+  text-align: center; /* Text centrat */
+  position: relative; /* Peste fundalul paginii */
+  z-index: 2; /* Nivel 2 */
+} /* Închide .interior-header */
+
+.interior-titlu-complet { /* Titlul cărții scris pe pagina din dreapta */
+  font-size: 0.9rem; /* Dimensiune lizibilă */
+  font-weight: 800; /* Îngroșat */
+  color: #451a03; /* Cerneală maro-închis */
+  display: block; /* Ocupă propriul bloc */
+  margin-top: 4px; /* 4px deasupra */
+  margin-bottom: 6px; /* 6px dedesubt */
+  line-height: 1.25; /* Spațiere între rânduri */
+  font-family: 'Georgia', serif; /* Font cu serife */
+  border-bottom: 2px double rgba(146, 64, 14, 0.4); /* Linie dublă sub titlu */
+  padding-bottom: 8px; /* Spațiu până la linia dublă */
+  display: -webkit-box; /* Permite limitarea numărului de rânduri */
+  -webkit-line-clamp: 3; /* Afișează maxim 3 rânduri */
+  line-clamp: 3; /* Standard pentru 3 rânduri */
+  -webkit-box-orient: vertical; /* Orientare verticală a blocului */
+  overflow: hidden; /* Ascunde restul dacă depășește 3 rânduri */
+} /* Închide .interior-titlu-complet */
+
+.citita .interior-titlu-complet { /* Titlul din interior pentru o carte împrumutată */
+  color: #701a3c; /* Cerneală vișinie */
+} /* Închide .citita .interior-titlu-complet */
+
+.interior-autor-pagina { /* Numele autorului scris sub titlu pe pagina din dreapta */
+  display: block; /* Pe rândul său */
+  font-size: 0.78rem; /* Mărime medie-mică */
+  font-style: italic; /* Scris înclinat */
+  color: #78350f; /* Maro cald */
+} /* Închide .interior-autor-pagina */
+
+.interior-titlu-mic { /* Etichetele mici ("MANUSCRIS ORIGINAL", "EVALUARE") */
+  font-size: 0.58rem; /* Scris mic */
+  text-transform: uppercase; /* Litere mari */
+  color: #92400e; /* Maro-auriu */
+  letter-spacing: 2px; /* Litere distanțate */
+  display: block; /* Rând propriu */
+  margin-bottom: 4px; /* Spațiu dedesubt */
+  font-weight: bold; /* Îngroșat */
+  font-family: sans-serif; /* Font fără serife */
+} /* Închide .interior-titlu-mic */
+
+.rating-stars { /* Pastila în care stau stelele de evaluare pe pagina stângă */
+  font-size: 1.1rem; /* Mărimea stelelor */
+  letter-spacing: 3px; /* Distanța dintre stele */
+  background: rgba(146, 64, 14, 0.1); /* Fundal discret pe pergament */
+  border-radius: 12px; /* Colțuri rotunjite */
+  padding: 2px 10px; /* Spațiere interioară */
+  display: inline-block; /* Lățime cât stelele */
+} /* Închide .rating-stars */
+
+.stea.plina { /* Stilul stelelor pline ★ */
+  color: #d97706; /* Auriu-chihlimbar */
+  text-shadow: 0 0 6px rgba(245, 158, 11, 0.5); /* Strălucire caldă */
+} /* Închide .stea.plina */
+.stea.goala { color: #cbb698; } /* Culoarea unei stele goale (dacă e folosită) */
+
+.book-actions { /* Grupul de jos de pe pagina dreaptă (bifa + butonul de ștergere) */
+  display: flex; /* Flexbox vertical */
+  flex-direction: column; /* Bifa deasupra butonului */
+  gap: 8px; /* 8px distanță între ele */
+  position: relative; /* Peste pergament */
+  z-index: 2; /* Nivel 2 */
+} /* Închide .book-actions */
+
+.checkbox-label { /* Chenarul în care stă bifa de "Disponibilă / Împrumutată" */
+  display: flex; /* Aliniază căsuța și textul pe un rând */
+  align-items: center; /* Centrate pe verticală */
+  justify-content: center; /* Centrate pe orizontală */
+  gap: 7px; /* 7px între căsuță și scris */
+  font-weight: 700; /* Scris îngroșat */
+  font-size: 0.76rem; /* Dimensiune text */
+  cursor: pointer; /* Cursor mână */
+  background: rgba(255, 255, 255, 0.45); /* Fundal luminos pe pagină */
+  padding: 5px 8px; /* Spațiere interioară */
+  border-radius: 4px; /* Colțuri ușor rotunjite */
+  border: 1px solid rgba(146, 64, 14, 0.25); /* Bordură fină */
+  font-family: sans-serif; /* Font clar */
+} /* Închide .checkbox-label */
+
+.status-text-inside { /* Textul "Disponibilă" de lângă bifă */
+  color: var(--turcuaz); /* Culoare turcoaz */
+  font-weight: 700; /* Îngroșat */
+} /* Închide .status-text-inside */
+
+.citita .status-text-inside { /* Textul "Împrumutată" când cartea e bifată */
+  color: var(--roz-carte); /* Culoare roz-rubiniu */
+} /* Închide .citita .status-text-inside */
+
+input[type="checkbox"] { /* Căsuța de bifat propriu-zisă */
+  width: 15px; /* Lățime 15px */
+  height: 15px; /* Înălțime 15px */
+  accent-color: var(--turcuaz); /* Culoarea bifei când e activă */
+  cursor: pointer; /* Cursor mână */
+} /* Închide input[type="checkbox"] */
+
+.citita input[type="checkbox"] { /* Căsuța de bifat când cartea este împrumutată */
+  accent-color: var(--roz-carte); /* Bifa devine roz-rubinie */
+} /* Închide .citita input[type="checkbox"] */
+
+.btn-danger { /* Butonul "Elimină din raft" */
+  background: linear-gradient(135deg, #0f766e 0%, #064e3b 100%); /* Verde-turcoaz închis */
+  color: #fffbeb; /* Scris alb-crem */
+  border: 1px solid #fde047; /* Bordură aurie */
+  padding: 7px; /* Spațiere interioară */
+  border-radius: 4px; /* Colțuri rotunjite */
+  cursor: pointer; /* Cursor mână */
+  font-weight: bold; /* Scris îngroșat */
+  font-family: 'Georgia', serif; /* Font cu serife */
+  font-size: 0.72rem; /* Dimensiune text */
+  width: 100%; /* Ocupă toată lățimea paginii */
+  transition: all 0.25s; /* Animează schimbarea culorii la hover */
+  letter-spacing: 0.5px; /* Spațiere litere */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.35); /* Umbră sub buton */
+} /* Închide .btn-danger */
+
+.btn-danger:hover { /* Când pui mouse-ul pe butonul "Elimină din raft" */
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%); /* Se înroșește pentru a indica ștergerea */
+  transform: translateY(-1px); /* Se ridică cu 1px */
+} /* Închide .btn-danger:hover */
+
+.citita .btn-danger { /* Butonul de ștergere pe o carte împrumutată */
+  background: linear-gradient(135deg, var(--roz-carte) 0%, #831843 100%); /* Asortat cu rozul cărții */
+} /* Închide .citita .btn-danger */
+
+.citita .btn-danger:hover { /* Hover pe butonul de ștergere la o carte împrumutată */
+  background: linear-gradient(135deg, #be123c 0%, #4c0519 100%); /* Vișiniu intens */
+} /* Închide .citita .btn-danger:hover */
+
+.badge { /* Eticheta cu formatul cărții (Broșată / Cartonată / Digitală) de pe copertă */
+  position: absolute; /* Poziționată în colțul dreapta-sus al coperții */
+  top: 14px; /* La 14px de sus */
+  right: -6px; /* Iese cu 6px în afara coperții ca un semn de carte lateral */
+  font-size: 0.58rem; /* Scris mic */
+  padding: 3px 9px; /* Spațiere interioară */
+  border-radius: 3px; /* Colțuri ușor rotunjite */
+  font-weight: bold; /* Îngroșat */
+  text-transform: uppercase; /* Litere mari */
+  box-shadow: 0 3px 6px rgba(0,0,0,0.5); /* Umbră sub etichetă */
+  z-index: 10; /* Deasupra coperții */
+  letter-spacing: 1px; /* Litere distanțate */
+  font-family: sans-serif; /* Font clar */
+} /* Închide .badge */
+
+.badge-brosata { background-color: #fbcfe8; color: #831843; border: 1px solid #f472b6; } /* Roz pal pentru formatul Broșată */
+.badge-digitala { background-color: #bae6fd; color: #082f49; border: 1px solid #7dd3fc; } /* Albastru deschis pentru formatul Digitală */
+.badge-cartonata { background-color: #fef08a; color: #422006; border: 1px solid #eab308; } /* Auriu deschis pentru formatul Cartonată */
+
+/* ========================================================= */
+/* 9. STĂRI GOALE & FOOTER DE SITE REAL                      */
+/* ========================================================= */
+.empty-state-box { /* Chenarul afișat când nu există cărți într-un filtru sau la căutare */
+  text-align: center; /* Centrează textul și butonul */
+  padding: 45px 20px; /* Spațiu interior generos */
+  background: rgba(28, 14, 8, 0.5); /* Fundal maro semitransparent */
+  border: 1px dashed var(--border-warm); /* Bordură aurie întreruptă */
+  border-radius: 12px; /* Colțuri rotunjite */
+} /* Închide .empty-state-box */
+
+.empty-icon { /* Iconița 🕯️ din chenarul gol */
+  font-size: 2.2rem; /* Dimensiune mare */
+  display: block; /* Pe rând propriu */
+  margin-bottom: 10px; /* Spațiu sub iconiță */
+} /* Închide .empty-icon */
+
+.reset-filter-btn { /* Butonul "Resetează căutarea" */
+  margin-top: 14px; /* Spațiu deasupra butonului */
+  background: var(--roz-carte); /* Fundal roz */
+  color: #fff; /* Text alb */
+  border: 1px solid #fde047; /* Bordură aurie */
+  padding: 8px 18px; /* Spațiere interioară */
+  border-radius: 20px; /* Formă de capsulă */
+  cursor: pointer; /* Cursor mână */
+  font-weight: bold; /* Scris îngroșat */
+} /* Închide .reset-filter-btn */
+
+.info, .error, .empty { /* Stil comun pentru mesajele informative, de eroare sau listă goală */
+  text-align: center; /* Text centrat */
+  padding: 15px; /* Spațiere interioară */
+  font-style: italic; /* Scris cursiv */
+  color: var(--text-muted); /* Culoare discretă */
+  font-size: 1.05rem; /* Mărime medie */
+} /* Închide .info, .error, .empty */
+
+.error { /* Stil specific pentru mesajul de eroare când serverul e oprit */
+  color: #fecdd3; /* Text roz-deschis */
+  background: rgba(159, 18, 57, 0.35); /* Fundal roșu-vișiniu semitransparent */
+  border-radius: 8px; /* Colțuri rotunjite */
+  font-weight: bold; /* Text îngroșat */
+  border: 1px solid rgba(244, 114, 182, 0.45); /* Bordură roz */
+} /* Închide .error */
+
+.site-footer { /* Subsolul paginii (Footer-ul de jos) */
+  margin-top: auto; /* Împinge subsolul la baza paginii chiar dacă sunt puține rafturi */
+  background: rgba(20, 10, 6, 0.88); /* Fundal mahon închis */
+  backdrop-filter: blur(12px); /* Sticlă mată */
+  border-top: 1px solid var(--border-warm); /* Linie aurie deasupra subsolului */
+  padding: 22px 24px; /* Spațiere interioară */
+  color: var(--text-muted); /* Culoare text secundar */
+  font-size: 0.88rem; /* Dimensiune text */
+} /* Închide .site-footer */
+
+[data-theme="light"] .site-footer { /* Subsolul pe tema luminoasă */
+  background: rgba(245, 235, 220, 0.92); /* Fundal crem-bej */
+} /* Închide .site-footer pe light */
+
+.footer-inner { /* Containerul care aliniază textul în subsol */
+  max-width: 1180px; /* Aceeași lățime maximă ca navbarul și conținutul */
+  margin: 0 auto; /* Centrat pe mijloc */
+  display: flex; /* Flexbox orizontal */
+  align-items: center; /* Centrat pe verticală */
+  justify-content: space-between; /* Brandul în stânga, statisticile în dreapta */
+  flex-wrap: wrap; /* Trec unele sub altele pe mobil */
+  gap: 15px; /* Spațiu între ele */
+} /* Închide .footer-inner */
+
+.footer-stats { /* Statisticile din dreapta subsolului */
+  display: flex; /* Puse în linie */
+  gap: 12px; /* 12px între elemente */
+  font-family: sans-serif; /* Font fără serife */
+  font-size: 0.82rem; /* Scris mic */
+} /* Închide .footer-stats */
+
+@media (max-width: 820px) { /* Reguli speciale pentru tablete și telefoane (ecrane sub 820px lățime) */
+  .navbar-inner { /* Interiorul bării de navigație pe mobil */
+    flex-direction: column; /* Așază logo-ul, căutarea și butoanele unele sub altele */
+    align-items: stretch; /* Le întinde pe toată lățimea */
+  } /* Închide .navbar-inner pe mobil */
+  .navbar-search { /* Bara de căutare pe mobil */
+    max-width: 100%; /* Ocupă 100% din lățime */
+  } /* Închide .navbar-search pe mobil */
+  .navbar-actions { /* Statisticile și butonul de temă pe mobil */
+    justify-content: space-between; /* Distribuite la capetele rândului */
+  } /* Închide .navbar-actions pe mobil */
+  .catalog-control-bar { /* Bara cu filtrele pe mobil */
+    flex-direction: column; /* Pune tab-urile sus și ordonarea dedesubt */
+    align-items: stretch; /* Întinse pe toată lățimea */
+  } /* Închide .catalog-control-bar pe mobil */
+} /* Închide blocul @media pentru mobil */
