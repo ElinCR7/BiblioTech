@@ -114,12 +114,19 @@ which is what stage 6 and stage 10 fix.
 | S5-R7 | no console warnings; README + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-05.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-05.md) | F12, Console |
 | S5-R8 | commit "Stage 5" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/21172aef34a09aa2c5f9f401a8f90b5971429af8) | commit history |
 
-## Stage 6: loading data from a mock API
+## Stage 6: loading data from a mock API & complete 3D UI customization
 The initial data was moved to `frontend/db.json` and is served by `json-server`
 on port 3001. All HTTP requests live in `frontend/src/api.js` (reading the base
 URL from `VITE_API_URL`), while `App.jsx` loads the list on mount through
 `useEffect(..., [])` with a cleanup flag and renders the loading, error, and
 success states.
+
+In this stage, the interface was completely customized into an interactive 3D
+digital library (**BiblioTech Sanctuary**), featuring:
+- **3D Entrance Portal & Wooden Shelves**: Animated 3D doors (`landing-portal`) and interactive 3D books (`CarteCard.jsx`, `CarteList.jsx`) that open on hover to reveal the spine, covers, and inner pages.
+- **5 Visual Realms (Themes)**: Turquoise & Pink signature dark theme (`dark`), Warm Parchment (`light`), Astral Observatory (`astral`), Botanical Greenhouse (`botanic`), and Gothic Castle (`gotic`), persisted in `localStorage`.
+- **Ambient Audio & Break Music Player**: Web Audio API synthesizer for ambient rain, page-turning rustle on book hover, and magical chimes, plus a dedicated Break Music player (`PLAYLIST_PAUZA`).
+- **Interactive Tools & Modals**: 25-minute Pomodoro reading hourglass, two-page Reading Journal modal with progress bar and interactive star rating, Literary Oracle recommender, Collector Certificate card with clipboard sharing, and a new manuscript registration modal.
 
 ### Tabelul de verificare al Etapei 6
 
@@ -127,8 +134,8 @@ success states.
 |---|---|---|---|
 | S6-R1 | db.json with 5+ items; npm run api on 3001 | [db.json](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/db.json), [package.json](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/package.json) | npm run api, open /carti |
 | S6-R2 | api.js reads VITE_API_URL, exports fetchCarti | [api.js#L1-L10](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js#L1-L10) | read |
-| S6-R3 | useEffect with [] and ignore; initial state [] | [App.jsx#L29-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L29-L31), [App.jsx#L76-L107](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L76-L107) | F12, Network (one request) |
-| S6-R4 | loading, error, and data states rendered | [App.jsx#L569-L581](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L569-L581) | stop npm run api, refresh |
+| S6-R3 | useEffect with [] and ignore; initial state [] | [App.jsx#L29-L31](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L29-L31), [App.jsx#L83-L114](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L83-L114) | F12, Network (one request) |
+| S6-R4 | loading, error, and data states + 3D shelves & cards | [App.jsx#L696-L763](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L696-L763), [CarteList.jsx#L1-L24](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L1-L24), [CarteCard.jsx#L1-L97](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L1-L97) | stop npm run api, refresh; hover 3D books |
 | S6-R5 | .env.example committed, .env in .gitignore | [.env.example](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.env.example), [.gitignore](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.gitignore) | git status |
-| S6-R6 | README Stage 6 section + How to run + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-06.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-06.md) | read |
+| S6-R6 | Complete 3D UI, 5 themes, audio & modals + README + AI log | [App.css#L1-L566](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.css#L1-L566), [App.jsx#L116-L1302](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L116-L1302), [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-06.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-06.md) | test 3D portal, themes, audio, journal & modals |
 | S6-R7 | commit "Stage 6" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commits/main) | commit history |
