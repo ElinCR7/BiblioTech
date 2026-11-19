@@ -31,6 +31,8 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 4: components rendered from data
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
+- [x] Stage 7: form and validation
+- [ ] Stage 8: routing and detail page
 
 
 
@@ -139,3 +141,19 @@ digital library (**BiblioTech Sanctuary**), featuring:
 | S6-R5 | .env.example committed, .env in .gitignore | [.env.example](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.env.example), [.gitignore](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/.gitignore) | git status |
 | S6-R6 | Complete 3D UI, 5 themes, audio & modals + README + AI log | [App.css#L1-L566](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.css#L1-L566), [App.jsx#L116-L1302](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L116-L1302), [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-06.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-06.md) | test 3D portal, themes, audio, journal & modals |
 | S6-R7 | commit "Stage 6" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/fc176ba1779c6bf9b52f74163ea730045552a48a) | commit history |
+
+## Stage 7: form and validation
+Books can be added directly from the page using a controlled form (`CarteForm.jsx`) with local validation (required title and author, maximum 100 characters) and inline error messages. Every change (add, toggle, delete) goes through a shared `request` helper in `frontend/src/api.js` to the API before updating the React state, so all modifications persist across page reloads. The `tw.json` file and all required `data-testid` attributes were added for automated verification.
+
+### Stage 7 Verification Checklist
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S7-R1 | controlled form: value + onChange on every field | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) | read |
+| S7-R2 | empty title shows an error, nothing is sent | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) (`valideaza`) | submit empty, watch Network |
+| S7-R3 | added item shows in the list and survives refresh | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx) (`handleAdd`), [api.js](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js) | add, refresh |
+| S7-R4 | toggle and delete survive refresh | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx) (`handleToggle`, `handleDelete`) | toggle/delete, refresh |
+| S7-R5 | button disabled while sending, form cleared only on success | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) | `--delay 3000`; stop API and submit |
+| S7-R6 | tw.json and the data-testid attributes from table 7.3 | [tw.json](https://github.com/ElinCR7/BiblioTech/blob/main/tw.json), [CarteCard.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx), [CarteList.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx) | `querySelectorAll` in the console |
+| S7-R7 | README Stage 7 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-07.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-07.md) | read |
+| S7-R8 | commit "Stage 7" pushed | [Stage 7 commit](https://github.com/ElinCR7/BiblioTech/commit/72bc7b8150cd882518a3fb3af5d73ea79fbe78fe) | commit history |
