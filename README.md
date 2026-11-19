@@ -145,15 +145,15 @@ digital library (**BiblioTech Sanctuary**), featuring:
 ## Stage 7: form and validation
 Books can be added directly from the page using a controlled form (`CarteForm.jsx`) with local validation (required title and author, maximum 100 characters) and inline error messages. Every change (add, toggle, delete) goes through a shared `request` helper in `frontend/src/api.js` to the API before updating the React state, so all modifications persist across page reloads. The `tw.json` file and all required `data-testid` attributes were added for automated verification.
 
-### Stage 7 Verification Checklist
+### Tabelul de verificare al Etapei 7
 
 | ID | Requirement | Where (permalink) | How to check |
 |---|---|---|---|
-| S7-R1 | controlled form: value + onChange on every field | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) | read |
-| S7-R2 | empty title shows an error, nothing is sent | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) (`valideaza`) | submit empty, watch Network |
-| S7-R3 | added item shows in the list and survives refresh | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx) (`handleAdd`), [api.js](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js) | add, refresh |
-| S7-R4 | toggle and delete survive refresh | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx) (`handleToggle`, `handleDelete`) | toggle/delete, refresh |
-| S7-R5 | button disabled while sending, form cleared only on success | [CarteForm.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx) | `--delay 3000`; stop API and submit |
-| S7-R6 | tw.json and the data-testid attributes from table 7.3 | [tw.json](https://github.com/ElinCR7/BiblioTech/blob/main/tw.json), [CarteCard.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx), [CarteList.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx) | `querySelectorAll` in the console |
+| S7-R1 | controlled form: value + onChange on every field | [CarteForm.jsx#L1-L150](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx#L1-L150) | read |
+| S7-R2 | empty title shows an error, nothing is sent | [CarteForm.jsx#L12-L26](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx#L12-L26) (`valideaza`) | submit empty, watch Network |
+| S7-R3 | added item shows in the list and survives refresh | [App.jsx#L398-L402](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L398-L402) (`handleAdd`), [api.js#L1-L42](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js#L1-L42) | add, refresh |
+| S7-R4 | toggle and delete survive refresh | [App.jsx#L404-L423](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx#L404-L423) (`handleToggle`, `handleDelete`) | toggle/delete, refresh |
+| S7-R5 | button disabled while sending, form cleared only on success | [CarteForm.jsx#L19-L49](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx#L19-L49) | `--delay 3000`; stop API and submit |
+| S7-R6 | tw.json and the data-testid attributes from table 7.3 | [tw.json](https://github.com/ElinCR7/BiblioTech/blob/main/tw.json), [CarteCard.jsx#L1-L120](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L1-L120), [CarteList.jsx#L1-L35](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L1-L35) | `querySelectorAll` in the console |
 | S7-R7 | README Stage 7 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-07.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-07.md) | read |
-| S7-R8 | commit "Stage 7" pushed | [Stage 7 commit](https://github.com/ElinCR7/BiblioTech/commit/72bc7b8150cd882518a3fb3af5d73ea79fbe78fe) | commit history |
+| S7-R8 | commit "Stage 7" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/72bc7b8150cd882518a3fb3af5d73ea79fbe78fe) | 
