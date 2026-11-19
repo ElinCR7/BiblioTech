@@ -5,10 +5,20 @@ export default function CarteList({
   onToggle,
   onDelete,
   onOpenJurnal,
+  onOpenRezumat,
   onHoverBook,
 }) {
+  if (!carti || carti.length === 0) {
+    return (
+      <p className="empty empty-state-box" data-testid="empty" style={{width: "100%"}}>
+        <span className="empty-icon">🕯️</span>
+        Nu există nicio carte pe acest raft.
+      </p>
+    );
+  }
+
   return (
-    <div className="raft-carti">
+    <ul className="raft-carti" style={{ paddingLeft: 0 }}>
       {carti.map((carte) => (
         <CarteCard
           key={carte.id}
@@ -16,9 +26,10 @@ export default function CarteList({
           onToggle={onToggle}
           onDelete={onDelete}
           onOpenJurnal={onOpenJurnal}
+          onOpenRezumat={onOpenRezumat}
           onHoverBook={onHoverBook}
         />
       ))}
-    </div>
+    </ul>
   );
 }

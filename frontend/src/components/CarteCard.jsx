@@ -3,6 +3,7 @@ export default function CarteCard({
   onToggle,
   onDelete,
   onOpenJurnal,
+  onOpenRezumat,
   onHoverBook,
 }) {
   const nota = Number(carte.rating) || 1;
@@ -18,63 +19,62 @@ export default function CarteCard({
       : [carte.titluAutor || "", ""];
 
   return (
-    <div
+    <li
       className={`book-shelf-slot ${carte.citita ? "citita" : ""}`}
       onMouseEnter={() => onHoverBook && onHoverBook()}
+      data-testid="item"
+      data-id={carte.id}
+      style={{ listStyle: "none", display: "inline-block" }}
     >
       <div className="book-volume">
-        {/* 1. COTORUL CĂRȚII */}
         <div className="book-spine">
           <div className="spine-ribs">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <span></span><span></span><span></span><span></span>
           </div>
-          <span className="spine-text">{carte.titluAutor}</span>
+          <span className="spine-text" data-testid="item-title">{carte.titluAutor}</span>
         </div>
 
-        {/* 2. PAGINA DIN DREAPTA */}
         <div className="book-inside-pages">
-          <div className="interior-header">
-            <span className="interior-titlu-mic">Manuscris Original</span>
-            <span
-              className="interior-titlu-complet"
-              title="Click pentru a deschide Jurnalul de Lectură"
-              onClick={() => onOpenJurnal && onOpenJurnal(carte)}
-            >
-              {titlu}
-            </span>
-            {autor && <span className="interior-autor-pagina">{autor}</span>}
-          </div>
-
-          <div className="book-actions">
-            <button
-              type="button"
-              className="btn-jurnal"
-              onClick={() => onOpenJurnal && onOpenJurnal(carte)}
-            >
-              ✒️ Jurnal de Lectură
-            </button>
-
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={carte.citita}
-                onChange={() => onToggle(carte.id)}
-              />
-              <span className="status-text-inside">
-                {carte.citita ? "Împrumutată" : "Disponibilă"}
+          <div className="right-page-center-box">
+            <div className="interior-header">
+              <span className="interior-titlu-mic">Manuscris Original</span>
+              <span
+                className="interior-titlu-complet"
+                title="Click pentru a citi rezumatul cărții"
+                onClick={() => onOpenRezumat && onOpenRezumat(carte)}
+              >
+                {titlu}
               </span>
-            </label>
+              {autor && <span className="interior-autor-pagina">{autor}</span>}
+            </div>
 
-            <button className="btn-danger" onClick={() => onDelete(carte.id)}>
-              Elimină din raft
-            </button>
+            <div className="right-page-divider" aria-hidden="true"></div>
+
+            <div className="book-actions">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={carte.citita}
+                  onChange={() => onToggle(carte.id)}
+                  data-testid="item-toggle"
+                />
+                <span className="status-text-inside">
+                  {carte.citita ? "Împrumutată" : "Disponibilă"}
+                </span>
+              </label>
+
+              <button
+                type="button"
+                className="btn-danger"
+                onClick={() => onDelete(carte.id)}
+                data-testid="item-delete"
+              >
+                Șterge
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* 3. COPERTA FAȚĂ + PAGINA DIN STÂNGA */}
         <div className="book-front-cover" data-stele={steleText}>
           <div className="cover-outside">
             <span className={`badge badge-${formatClasa}`}>{carte.format}</span>
@@ -92,8 +92,28 @@ export default function CarteCard({
                 <span className="cat-name">{carte.gen || "Literatură"}</span>
               </div>
 
-              <div className="mandala-inner-circle" aria-hidden="true">
-                <span className="mandala-center-sun">۞</span>
+              <div className="left-page-buttons-group">
+                <button
+                  type="button"
+                  className="btn-rezumat-open"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenRezumat && onOpenRezumat(carte);
+                  }}
+                >
+                  📖 Citește Rezumat
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-jurnal"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onOpenJurnal && onOpenJurnal(carte);
+                  }}
+                >
+                  ✒️ Jurnal
+                </button>
               </div>
 
               <div className="left-page-rating">
@@ -106,6 +126,6 @@ export default function CarteCard({
           </div>
         </div>
       </div>
-    </div>
+    </li>
   );
 }

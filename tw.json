@@ -1,0 +1,11 @@
+{
+  "resource": "carti",
+  "title": "titluAutor",
+  "done": "citita",
+  "sample": {
+    "gen": "Fantezie",
+    "format": "Broșată",
+    "rating": 5,
+    "totalPagini": 300
+  }
+}
