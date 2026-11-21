@@ -1,0 +1,87 @@
+.form { /* Chenarul formularului (completează clasa globală .panel) */
+  display: flex; /* Aranjează elementele pe verticală */
+  flex-direction: column; /* Direcție verticală */
+  gap: 18px; /* Spațiu uniform între antet, câmpuri și buton */
+  border: 1.5px solid var(--border-warm); /* Contur auriu vizibil */
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.65); /* Umbră pronunțată */
+} /* Închide .form */
+
+.header { /* Antetul formularului */
+  text-align: center; /* Text centrat */
+  border-bottom: 1px solid var(--border-warm); /* Linie fină de separare */
+  padding-bottom: 12px; /* Spațiu sub titlu */
+} /* Închide .header */
+
+.title { /* Titlul formularului */
+  font-size: 1.4rem; /* Mărime titlu */
+  color: var(--auriu); /* Culoare aurie din temă */
+  margin-bottom: 4px; /* Mic spațiu jos */
+} /* Închide .title */
+
+.subtitle { /* Subtitlul formularului */
+  font-size: 0.9rem; /* Text discret */
+  font-style: italic; /* Cursiv */
+  color: var(--text-muted); /* Culoare secundară */
+} /* Închide .subtitle */
+
+.grid { /* Grila câmpurilor formularului */
+  display: grid; /* Layout grid */
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Coloane adaptive */
+  gap: 14px; /* Spațiu între câmpuri */
+} /* Închide .grid */
+
+.fieldWide { /* Câmpul de titlu-autor care ocupă 2 coloane pe ecrane mari */
+  grid-column: span 2; /* Întindere pe 2 coloane */
+  display: flex; /* Etichetă deasupra inputului */
+  flex-direction: column; /* Vertical */
+  gap: 6px; /* Spațiu între label și input */
+} /* Închide .fieldWide */
+
+.field { /* Câmp standard (gen, format, rating) */
+  display: flex; /* Etichetă deasupra selectului */
+  flex-direction: column; /* Vertical */
+  gap: 6px; /* Spațiu mic */
+} /* Închide .field */
+
+.label { /* Etichetele câmpurilor */
+  font-size: 0.82rem; /* Mărime lizibilă */
+  font-weight: bold; /* Îngroșat */
+  color: var(--text-main); /* Culoare principală */
+} /* Închide .label */
+
+.input, .select { /* Stil comun pentru input și dropdown-uri */
+  padding: 10px 12px; /* Spațiu interior confortabil */
+  border-radius: 8px; /* Colțuri rotunjite */
+  border: 1px solid var(--border-warm); /* Contur auriu */
+  background: rgba(15, 8, 5, 0.65); /* Fundal închis semi-transparent */
+  color: #fffbeb; /* Text deschis */
+  font: inherit; /* Moștenește fontul */
+  font-size: 0.92rem; /* Mărime text */
+  outline: none; /* Elimină conturul implicit */
+} /* Închide .input, .select */
+
+.input:focus, .select:focus { /* Evidențiere când câmpul este activ */
+  border-color: var(--auriu); /* Contur auriu aprins */
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.35); /* Strălucire caldă */
+} /* Închide :focus */
+
+.actions { /* Containerul butonului de trimitere */
+  display: flex; /* Aliniere */
+  justify-content: flex-end; /* Aliniază butonul la dreapta */
+} /* Închide .actions */
+
+.submitBtn { /* Stil suplimentar pentru butonul de adăugare */
+  padding: 10px 24px; /* Buton mai generos */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Tranziție lină */
+} /* Închide .submitBtn */
+
+.submitBtn:hover:not(:disabled) { /* Efect la hover */
+  transform: translateY(-2px); /* Ridicare ușoară */
+  box-shadow: 0 6px 18px rgba(213, 83, 126, 0.5); /* Umbră roz */
+} /* Închide :hover */
+
+@media (max-width: 640px) { /* Adaptare pe ecrane mici */
+  .fieldWide { /* Pe mobil ocupă o singură coloană */
+    grid-column: span 1; /* Reset span */
+  } /* Închide .fieldWide */
+} /* Închide media query */

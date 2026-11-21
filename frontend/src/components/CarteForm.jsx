@@ -1,186 +1,147 @@
-import { useState } from "react";
+import { useState } from "react"; // Importă hook-ul useState pentru câmpurile controlate ale formularului
+import styles from "./CarteForm.module.css"; // Importă stilurile locale ale formularului (CSS Module)
 
-const FORMAT_EDITIE = [
-  { value: "Broșată", label: "Broșată" },
-  { value: "Cartonată", label: "Cartonată" },
-  { value: "Digitală", label: "Digitală" },
-];
+export default function CarteForm({ onAdd }) { // Componenta formularului care primește callback-ul onAdd din CartiPage
+  const [titluAutor, setTitluAutor] = useState(""); // State pentru titlul și autorul cărții
+  const [gen, setGen] = useState("Literatură"); // State pentru genul/categoria cărții
+  const [format, setFormat] = useState("Broșată"); // State pentru formatul fizic/digital
+  const [rating, setRating] = useState(5); // State pentru evaluarea în stele (1–5)
+  const [formError, setFormError] = useState(null); // State pentru mesajul de validare
+  const [submitting, setSubmitting] = useState(false); // State care blochează dublu-click-ul în timpul cererii POST
 
-const GENURI = [
-  { value: "Fantezie", label: "Fantezie" },
-  { value: "SF", label: "SF" },
-  { value: "Clasice", label: "Clasice" },
-  { value: "Filosofie", label: "Filosofie" },
-  { value: "Istorie", label: "Istorie" },
-  { value: "Mister", label: "Mister" },
-];
+  async function handleSubmit(e) { // Funcția apelată la trimiterea formularului
+    e.preventDefault(); // Oprește reîncărcarea implicită a paginii de către browser
+    const titluCurat = titluAutor.trim(); // Elimină spațiile goale de la început și sfârșit
+    if (titluCurat.length < 3) { // Validează ca titlul să aibă cel puțin 3 caractere
+      setFormError("Introdu titlul și autorul (minim 3 caractere)."); // Afișează eroarea de validare
+      return; // Oprește trimiterea către server
+    } // Închide verificarea de lungime
 
-const TITLU_MAX = 100;
+    setFormError(null); // Curăță eventuala eroare anterioară
+    setSubmitting(true); // Dezactivează butonul până răspunde serverul
+    try { // Încearcă trimiterea către API
+      await onAdd({ // Apelează funcția primită prin props (care face POST /carti)
+        titluAutor: titluCurat, // Trimite titlul curățat
+        gen, // Trimite genul selectat
+        format, // Trimite formatul selectat
+        rating: Number(rating), // Convertește nota la număr
+        citita: false, // O carte nouă este implicit disponibilă (necitită)
+      }); // Închide obiectul trimis
+      setTitluAutor(""); // Golește câmpul de text după adăugare cu succes
+      setRating(5); // Resetează rating-ul la 5 stele
+    } catch (err) { // Dacă serverul returnează eroare
+      setFormError(`Nu am putut adăuga cartea: ${err.message}`); // Afișează eroarea primită
+    } finally { // Se execută indiferent de rezultat
+      setSubmitting(false); // Reactivează butonul de trimitere
+    } // Închide blocul try-catch-finally
+  } // Închide handleSubmit
 
-export default function CarteForm({ onAdd }) {
-  const [titluAutor, setTitluAutor] = useState("");
-  const [gen, setGen] = useState("Fantezie");
-  const [format, setFormat] = useState("Broșată");
-  const [rating, setRating] = useState(5);
-  const [totalPagini, setTotalPagini] = useState(300);
-
-  const [eroare, setEroare] = useState("");
-  const [trimite, setTrimite] = useState(false);
-
-  function valideaza() {
-    const t = titluAutor.trim();
-    if (t === "") return "Titlul și autorul sunt obligatorii.";
-    if (t.length > 100) return `Titlul are maximum 100 de caractere.`;
-    return "";
-  }
-
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const mesaj = valideaza();
-    if (mesaj) {
-      setEroare(mesaj);
-      return;
-    }
-    setEroare("");
-    setTrimite(true);
-
-    try {
-      await onAdd({
-        titluAutor: titluAutor.trim(),
-        gen,
-        format,
-        rating: Number(rating),
-        totalPagini: Number(totalPagini) || 300,
-        citita: false,
-        paginaCurenta: 0,
-        citat: "Prima filă din noua poveste...",
-        notite: "Manuscris adăugat în arhivă.",
-      });
-      setTitluAutor("");
-      setGen("Fantezie");
-      setFormat("Broșată");
-      setRating(5);
-      setTotalPagini(300);
-    } catch (err) {
-      setEroare(err.message);
-    } finally {
-      setTrimite(false);
-    }
-  }
-
-  return (
-    <div className="form-mahon-wrapper">
-      {/* Lumânările decorative stânga-dreapta */}
-      <div className="lumanare-form stanga lumanare-realista" aria-hidden="true">
-        <span className="aura-lumanare"></span>
-        <span className="flacara-3d"></span>
-        <span className="fitil-3d"></span>
-        <span className="picatura-ceara"></span>
-        <span className="ceara-3d"></span>
-        <span className="suport-auriu"></span>
-      </div>
-      <div className="lumanare-form dreapta lumanare-realista" aria-hidden="true">
-        <span className="aura-lumanare"></span>
-        <span className="flacara-3d"></span>
-        <span className="fitil-3d"></span>
-        <span className="picatura-ceara"></span>
-        <span className="ceara-3d"></span>
-        <span className="suport-auriu"></span>
+  return ( // Returnează formularul stilizat în chenarul comun .panel
+    <form className={`panel ${styles.form}`} onSubmit={handleSubmit} data-testid="add-form">
+      {/* Antetul formularului cu titlu și lumânare decorativă */}
+      <div className={styles.header}>
+        {/* Titlul secțiunii de adăugare */}
+        <h2 className={styles.title}>🕯️ Adaugă un Volum Nou în Arhivă</h2>
+        {/* Subtitlu descriptiv */}
+        <p className={styles.subtitle}>Completează detaliile manuscrisului pentru a-l așeza pe raft</p>
       </div>
 
-      <form className="task-form custom-carte-form" onSubmit={handleSubmit} noValidate data-testid="form">
-        <div className="form-ornament-header">
-           <span className="hero-corner corner-tl" style={{top: "6px", left: "6px"}}>❖</span>
-           <span className="hero-corner corner-tr" style={{top: "6px", right: "6px"}}>❖</span>
-           <h3 className="form-mahon-title">Înregistrare Manuscris</h3>
-           <div className="jurnal-divider" style={{margin: "4px 0 16px 0"}}><span>📜</span></div>
-        </div>
-
-        <div className="jurnal-section-box form-spacing">
-          <label className="jurnal-label">Titlu și Autor</label>
+      {/* Grila care aranjează câmpurile formularului */}
+      <div className={styles.grid}>
+        {/* Câmpul principal pentru titlu și autor */}
+        <div className={styles.fieldWide}>
+          {/* Etichetă asociată inputului */}
+          <label className={styles.label} htmlFor="titlu-autor">Titlu - Autor</label>
+          {/* Input controlat legat de state-ul titluAutor */}
           <input
+            id="titlu-autor"
             type="text"
-            className="mahon-input"
+            className={styles.input}
+            placeholder="Ex: Dune - Frank Herbert"
             value={titluAutor}
             onChange={(e) => setTitluAutor(e.target.value)}
-            placeholder="ex: Crimă și Pedeapsă - F. Dostoievski"
-            maxLength={100}
-            aria-invalid={Boolean(eroare)}
-            data-testid="form-title"
+            data-testid="input-title"
           />
         </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-          <div className="jurnal-section-box form-spacing">
-            <label className="jurnal-label">Gen / Colecție</label>
-            <select
-              className="mahon-input"
-              value={gen}
-              onChange={(e) => setGen(e.target.value)}
-              data-testid="form-gen"
-            >
-              <option value="Fantezie">Fantezie</option>
-              <option value="SF">SF</option>
-              <option value="Clasice">Clasice</option>
-              <option value="Filosofie">Filosofie</option>
-              <option value="Istorie">Istorie</option>
-              <option value="Mister">Mister</option>
-            </select>
-          </div>
-
-          <div className="jurnal-section-box form-spacing">
-            <label className="jurnal-label">Format</label>
-            <select
-              className="mahon-input"
-              value={format}
-              onChange={(e) => setFormat(e.target.value)}
-              data-testid="form-format"
-            >
-              <option value="Broșată">Broșată</option>
-              <option value="Cartonată">Cartonată</option>
-              <option value="Digitală">Digitală</option>
-            </select>
-          </div>
-
-          <div className="jurnal-section-box form-spacing">
-            <label className="jurnal-label">Evaluare (1-5)</label>
-            <select
-              className="mahon-input"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-              data-testid="form-rating"
-            >
-              <option value="5">★★★★★ (5)</option>
-              <option value="4">★★★★☆ (4)</option>
-              <option value="3">★★★☆☆ (3)</option>
-              <option value="2">★★☆☆☆ (2)</option>
-              <option value="1">★☆☆☆☆ (1)</option>
-            </select>
-          </div>
-
-          <div className="jurnal-section-box form-spacing">
-            <label className="jurnal-label">Total Pagini</label>
-            <input
-              type="number"
-              className="mahon-input"
-              min="1"
-              value={totalPagini}
-              onChange={(e) => setTotalPagini(e.target.value)}
-              data-testid="form-totalPagini"
-            />
-          </div>
+        {/* Selectorul de gen literar */}
+        <div className={styles.field}>
+          {/* Etichetă gen */}
+          <label className={styles.label} htmlFor="gen-carte">Colecție / Gen</label>
+          {/* Dropdown controlat pentru gen */}
+          <select
+            id="gen-carte"
+            className={styles.select}
+            value={gen}
+            onChange={(e) => setGen(e.target.value)}
+            data-testid="input-gen"
+          >
+            {/* Opțiunile de gen */}
+            <option value="Literatură">Literatură</option>
+            <option value="SF">SF</option>
+            <option value="Fantezie">Fantezie</option>
+            <option value="Clasice">Clasice</option>
+            <option value="Istorie">Istorie</option>
+            <option value="Biografie">Biografie</option>
+            <option value="Dezvoltare">Dezvoltare</option>
+          </select>
         </div>
 
-        {eroare && (
-          <p className="error" data-testid="form-error" style={{marginBottom: "12px"}}>
-            {eroare}
-          </p>
-        )}
+        {/* Selectorul de format */}
+        <div className={styles.field}>
+          {/* Etichetă format */}
+          <label className={styles.label} htmlFor="format-carte">Format</label>
+          {/* Dropdown controlat pentru format */}
+          <select
+            id="format-carte"
+            className={styles.select}
+            value={format}
+            onChange={(e) => setFormat(e.target.value)}
+            data-testid="input-format"
+          >
+            {/* Opțiunile de format */}
+            <option value="Broșată">Broșată</option>
+            <option value="Cartonată">Cartonată</option>
+            <option value="Digitală">Digitală</option>
+          </select>
+        </div>
 
-        <button type="submit" disabled={trimite} data-testid="form-submit" className="mahon-btn-save w-100">
-          {trimite ? "Se salvează pe server..." : "✨ Așază pe Raft"}
+        {/* Selectorul de evaluare în stele */}
+        <div className={styles.field}>
+          {/* Etichetă evaluare */}
+          <label className={styles.label} htmlFor="rating-carte">Evaluare</label>
+          {/* Dropdown controlat pentru rating */}
+          <select
+            id="rating-carte"
+            className={styles.select}
+            value={rating}
+            onChange={(e) => setRating(Number(e.target.value))}
+            data-testid="input-rating"
+          >
+            {/* Opțiunile 1–5 stele */}
+            <option value={5}>★★★★★ (5/5)</option>
+            <option value={4}>★★★★ (4/5)</option>
+            <option value={3}>★★★ (3/5)</option>
+            <option value={2}>★★ (2/5)</option>
+            <option value={1}>★ (1/5)</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Afișează eroarea de validare sau de server dacă există */}
+      {formError && (
+        <p className="error" data-testid="form-error">
+          {formError}
+        </p>
+      )}
+
+      {/* Zona butonului de trimitere */}
+      <div className={styles.actions}>
+        {/* Butonul submit care adaugă cartea pe server */}
+        <button type="submit" className={`btn ${styles.submitBtn}`} disabled={submitting} data-testid="submit-btn">
+          {submitting ? "⏳ Se așază pe raft..." : "✨ Adaugă pe Raft"}
         </button>
-      </form>
-    </div>
-  );
-}
+      </div>
+    </form>
+  ); // Închide return
+} // Închide componenta CarteForm

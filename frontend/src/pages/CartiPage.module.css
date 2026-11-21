@@ -1,0 +1,4 @@
+/* frontend/src/pages/CartiPage.module.css */
+.grid { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; align-items: start; } /* Grilă 2 coloane[cite: 19] */
+.summary { margin-top: -8px; color: var(--muted); font-size: 0.9rem; } /* Stil contor[cite: 19] */
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } } /* O coloană pe mobil[cite: 19] */

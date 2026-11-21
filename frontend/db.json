@@ -1,14 +1,6 @@
 {
   "carti": [
     {
-      "id": "1",
-      "titluAutor": "CR7: Legenda - Elin Dogaru",
-      "citita": false,
-      "format": "Broșată",
-      "gen": "Sport",
-      "rating": 5
-    },
-    {
       "id": "2",
       "titluAutor": "Mentalitatea CR7 - Elin Dogaru",
       "citita": true,
@@ -19,7 +11,7 @@
     {
       "id": "3",
       "titluAutor": "CR7 - Elin Dogaru",
-      "citita": false,
+      "citita": true,
       "format": "Digitală",
       "gen": "Sport",
       "rating": 5
@@ -27,7 +19,7 @@
     {
       "id": "4",
       "titluAutor": "Secrete CR7 - Elin Dogaru",
-      "citita": false,
+      "citita": true,
       "format": "Broșată",
       "gen": "Sport",
       "rating": 4
@@ -109,14 +101,6 @@
       "titluAutor": "Campion - Elin Dogaru",
       "citita": false,
       "format": "Digitală",
-      "gen": "Sport",
-      "rating": 1
-    },
-    {
-      "id": "15",
-      "titluAutor": "Poveste - Elin Dogaru",
-      "citita": true,
-      "format": "Cartonată",
       "gen": "Sport",
       "rating": 1
     },
@@ -225,22 +209,6 @@
       "rating": 1
     },
     {
-      "id": "29",
-      "titluAutor": "Nopți albe - Melissa Tiroiu",
-      "citita": false,
-      "format": "Broșată",
-      "gen": "Romantism",
-      "rating": 1
-    },
-    {
-      "id": "30",
-      "titluAutor": "Ultima scrisoare - Melissa Tiroiu",
-      "citita": true,
-      "format": "Digitală",
-      "gen": "Romantism",
-      "rating": 1
-    },
-    {
       "id": "31",
       "titluAutor": "Mândrie și prejudecată - Melissa",
       "citita": true,
@@ -287,14 +255,6 @@
       "format": "Digitală",
       "gen": "Clasice",
       "rating": 4
-    },
-    {
-      "id": "37",
-      "titluAutor": "Baltagul - Sadoveanu",
-      "citita": false,
-      "format": "Broșată",
-      "gen": "Clasice",
-      "rating": 3
     },
     {
       "id": "38",
@@ -349,14 +309,6 @@
       "titluAutor": "Oameni de piatră - Rebreanu",
       "citita": false,
       "format": "Broșată",
-      "gen": "Clasice",
-      "rating": 1
-    },
-    {
-      "id": "45",
-      "titluAutor": "Bătrânul și marea - Hemingway",
-      "citita": true,
-      "format": "Cartonată",
       "gen": "Clasice",
       "rating": 1
     },
@@ -465,22 +417,6 @@
       "rating": 1
     },
     {
-      "id": "59",
-      "titluAutor": "Fahrenheit 451 - Bradbury",
-      "citita": false,
-      "format": "Digitală",
-      "gen": "Ficțiune",
-      "rating": 1
-    },
-    {
-      "id": "60",
-      "titluAutor": "OZN - Călătorie astrală",
-      "citita": true,
-      "format": "Cartonată",
-      "gen": "Ficțiune",
-      "rating": 1
-    },
-    {
       "id": "61",
       "titluAutor": "Atomic Habits - Clear",
       "citita": true,
@@ -583,34 +519,7 @@
       "format": "Cartonată",
       "gen": "Dezvoltare",
       "rating": 1
-    },
-    {
-      "id": "74",
-      "titluAutor": "Succes - Carnegie",
-      "citita": true,
-      "format": "Digitală",
-      "gen": "Dezvoltare",
-      "rating": 1
-    },
-    {
-      "id": "75",
-      "titluAutor": "Gândirea pozitivă - Peale",
-      "citita": false,
-      "format": "Broșată",
-      "gen": "Dezvoltare",
-      "rating": 1
-    },
-    {
-      "titluAutor": "Alalaa -  Dogaru",
-      "gen": "SF",
-      "format": "Cartonată",
-      "rating": 5,
-      "totalPagini": 300,
-      "citita": false,
-      "paginaCurenta": 0,
-      "citat": "Prima filă din noua poveste...",
-      "notite": "Manuscris adăugat în arhivă.",
-      "id": "a3iNiL-"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

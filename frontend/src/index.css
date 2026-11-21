@@ -1,0 +1,208 @@
+/* ========================================================= */
+/* 1. CELE 5 TEME VIZUALE (VARIABILE GLOBALE)                */
+/* ========================================================= */
+:root, /* Aplică tema implicită pe elementul rădăcină <html> */
+[data-theme="dark"] { /* Tema Mahon Clasic */
+  --bg-body: #160c08; /* Culoarea de fundal a paginii */
+  --bg-panel: rgba(38, 21, 14, 0.72); /* Fundalul semi-transparent al panourilor */
+  --bg-navbar: rgba(24, 13, 9, 0.88); /* Fundalul barei de navigație */
+  --text-main: #fef3c7; /* Culoarea principală a textului */
+  --text-muted: #d6c3b3; /* Culoarea textului secundar */
+  --turcuaz: #0f766e; /* Culoarea turcoaz pentru cărți disponibile */
+  --roz-inchis: #f472b6; /* Roz aprins pentru accente */
+  --roz-carte: #d5537e; /* Rozul cărților citite/împrumutate */
+  --auriu: #fbbf24; /* Auriu pentru ornamente și link-uri */
+  --border-warm: rgba(251, 191, 36, 0.32); /* Bordură aurie discretă */
+  --raft-scandura: #361b0d; /* Culoarea scândurii raftului */
+  --mouse-x: 50vw; /* Poziția X a mouse-ului pentru lumina lumânării */
+  --mouse-y: 50vh; /* Poziția Y a mouse-ului pentru lumina lumânării */
+} /* Închide tema dark */
+
+[data-theme="light"] { /* Tema Pergament Luminos */
+  --bg-body: #2c1a12; /* Fundal cald */
+  --bg-panel: rgba(255, 250, 240, 0.92); /* Panou crem deschis */
+  --bg-navbar: rgba(255, 248, 235, 0.94); /* Bară crem deschis */
+  --text-main: #29180e; /* Text maro închis */
+  --text-muted: #6b4c35; /* Text secundar maro */
+  --turcuaz: #0d9488; /* Turcoaz luminos */
+  --roz-inchis: #ec4899; /* Roz accent */
+  --roz-carte: #be4673; /* Roz carte */
+  --auriu: #d97706; /* Auriu chihlimbar */
+  --border-warm: rgba(180, 83, 9, 0.35); /* Bordură caldă */
+  --raft-scandura: #361b0d; /* Scândură mahon */
+} /* Închide tema light */
+
+[data-theme="astral"] { /* Tema Observator Astral */
+  --bg-body: #070b19; /* Albastru nocturn */
+  --bg-panel: rgba(13, 20, 44, 0.78); /* Panou albastru închis */
+  --bg-navbar: rgba(8, 12, 28, 0.9); /* Bară albastru închis */
+  --text-main: #e0f2fe; /* Text alb-albăstrui */
+  --text-muted: #94a3b8; /* Text gri-albăstrui */
+  --turcuaz: #2563eb; /* Albastru electric */
+  --roz-inchis: #38bdf8; /* Cyan luminos */
+  --roz-carte: #7c3aed; /* Violet astral */
+  --auriu: #fde047; /* Auriu stelar */
+  --border-warm: rgba(56, 189, 248, 0.38); /* Bordură cyan */
+  --raft-scandura: #0f172a; /* Scândură albastru închis */
+} /* Închide tema astral */
+
+[data-theme="botanic"] { /* Tema Sera Botanică */
+  --bg-body: #06150e; /* Verde foarte închis */
+  --bg-panel: rgba(10, 31, 21, 0.78); /* Panou verde smarald */
+  --bg-navbar: rgba(6, 20, 14, 0.9); /* Bară verde închis */
+  --text-main: #ecfdf5; /* Text alb-mentă */
+  --text-muted: #a7f3d0; /* Text verde pal */
+  --turcuaz: #059669; /* Verde smarald */
+  --roz-inchis: #34d399; /* Verde luminos */
+  --roz-carte: #b45309; /* Cupru cald */
+  --auriu: #fbbf24; /* Auriu */
+  --border-warm: rgba(52, 211, 153, 0.35); /* Bordură verde */
+  --raft-scandura: #112a1e; /* Scândură verde închis */
+} /* Închide tema botanic */
+
+[data-theme="gotic"] { /* Tema Castelul Gotic */
+  --bg-body: #0d0407; /* Negru-vișiniu */
+  --bg-panel: rgba(28, 7, 14, 0.8); /* Panou vișiniu */
+  --bg-navbar: rgba(16, 4, 8, 0.92); /* Bară vișinie */
+  --text-main: #ffe4e6; /* Text roz pal */
+  --text-muted: #fda4af; /* Text roz stins */
+  --turcuaz: #4c0519; /* Vișiniu închis */
+  --roz-inchis: #f43f5e; /* Roșu-roz */
+  --roz-carte: #be123c; /* Roșu rubiniu */
+  --auriu: #fbbf24; /* Auriu */
+  --border-warm: rgba(244, 63, 94, 0.38); /* Bordură rubinie */
+  --raft-scandura: #260710; /* Scândură gotică */
+} /* Închide tema gotic */
+
+* { /* Resetare globală pe toate elementele */
+  box-sizing: border-box; /* Include padding și border în lățime/înălțime */
+  margin: 0; /* Elimină marginile implicite */
+  padding: 0; /* Elimină spațierea implicită */
+} /* Închide * */
+
+body { /* Stilul de bază al paginii */
+  background-color: var(--bg-body); /* Aplică fundalul temei active */
+  color: var(--text-main); /* Aplică culoarea textului */
+  font-family: "Georgia", serif; /* Font clasic de bibliotecă */
+  transition: background-color 0.4s, color 0.4s; /* Tranziție lină la schimbarea temei */
+  min-height: 100vh; /* Ocupă cel puțin toată înălțimea ecranului */
+  position: relative; /* Referință pentru straturile de fundal */
+  overflow-x: hidden; /* Previne scroll-ul orizontal nedorit */
+} /* Închide body */
+
+a { /* Stil global pentru link-uri */
+  color: var(--auriu); /* Culoare aurie */
+} /* Închide a */
+
+/* ========================================================= */
+/* 2. FUNDALUL AMBIENTAL & LUMÂNAREA COMUNĂ                  */
+/* ========================================================= */
+.ambient-library-bg { /* Imaginea de fundal a bibliotecii */
+  position: fixed; /* Rămâne fixă la scroll */
+  inset: 0; /* Acoperă tot ecranul (top/right/bottom/left: 0) */
+  pointer-events: none; /* Nu blochează click-urile utilizatorului */
+  z-index: 0; /* Stă în spatele conținutului */
+  background-image: linear-gradient(to bottom, rgba(20, 10, 8, 0.72), rgba(16, 8, 5, 0.85)), url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2000&auto=format&fit=crop"); /* Strat întunecat peste poza bibliotecii */
+  background-size: cover; /* Acoperă uniform ecranul */
+  background-position: center; /* Centrează imaginea */
+  filter: sepia(0.3) contrast(1.08) brightness(0.95); /* Ton cald vintage */
+} /* Închide .ambient-library-bg */
+
+.ambient-candle-glows { /* Lumini difuze de lumânări pe fundal */
+  position: fixed; /* Fixe pe ecran */
+  inset: 0; /* Acoperă tot ecranul */
+  pointer-events: none; /* Nu blochează click-urile */
+  z-index: 1; /* Peste imaginea de fundal */
+  background: radial-gradient(circle at 12% 30%, rgba(251, 191, 36, 0.32), transparent 65%), radial-gradient(circle at 88% 25%, rgba(213, 83, 126, 0.28), transparent 55%); /* Pete de lumină caldă și roz */
+} /* Închide .ambient-candle-glows */
+
+.mouse-candle-light { /* Lumina care urmărește cursorul mouse-ului */
+  position: fixed; /* Fixă pe ecran */
+  inset: 0; /* Acoperă tot ecranul */
+  pointer-events: none; /* Nu blochează click-urile */
+  z-index: 900; /* Deasupra conținutului pentru efectul de lumină */
+  background: radial-gradient(90px circle at var(--mouse-x) var(--mouse-y), rgba(254, 240, 138, 0.2), transparent 100%); /* Cerc luminos centrat pe mouse */
+  mix-blend-mode: screen; /* Combină lumina natural cu fundalul */
+} /* Închide .mouse-candle-light */
+
+/* Lumânare 3D reutilizabilă (folosită în formular și navbar) */
+.lumanare-realista { position: relative; display: inline-block; width: 28px; height: 54px; vertical-align: middle; flex-shrink: 0; } /* Containerul lumânării */
+.aura-lumanare { position: absolute; top: -12px; left: -16px; width: 60px; height: 60px; background: radial-gradient(circle, rgba(254, 240, 138, 0.55), transparent 72%); border-radius: 50%; pointer-events: none; } /* Haloul luminos */
+.suport-auriu { position: absolute; bottom: 0; left: 2px; width: 24px; height: 5px; background: linear-gradient(90deg, #92400e, #fde047, #b45309); border-radius: 4px; } /* Suportul de jos */
+.ceara-3d { position: absolute; bottom: 4px; left: 6px; width: 16px; height: 28px; background: linear-gradient(90deg, #fef3c7, #fffbeb 40%, #f59e0b 90%, #b45309); border-radius: 3px 3px 1px 1px; } /* Corpul de ceară */
+.picatura-ceara { position: absolute; bottom: 18px; left: 9px; width: 4px; height: 11px; background: #fffbeb; border-radius: 2px 2px 4px 4px; z-index: 2; } /* Picătura scursă */
+.fitil-3d { position: absolute; bottom: 32px; left: 13px; width: 2px; height: 5px; background: #292524; } /* Fitilul negru */
+.flacara-3d { position: absolute; bottom: 35px; left: 7px; width: 14px; height: 24px; background: radial-gradient(ellipse at 50% 75%, #fff 25%, #fef08a 55%, #f59e0b 85%, #ea580c); border-radius: 50% 50% 25% 25%; box-shadow: 0 0 15px 4px #fef08a, 0 0 35px 10px #f59e0b; z-index: 3; } /* Flacăra lumânării */
+
+/* ========================================================= */
+/* 3. CLASE COMUNE TUTUROR PAGINILOR                         */
+/* ========================================================= */
+.panel { /* Panou comun (folosit pe Biblioteca, Detaliu, Despre, 404) */
+  background: var(--bg-panel); /* Fundal semi-transparent */
+  backdrop-filter: blur(14px); /* Efect de sticlă mată */
+  padding: 28px 32px; /* Spațiu interior */
+  border-radius: 16px; /* Colțuri rotunjite */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75); /* Umbră adâncă */
+  border: 1px solid var(--border-warm); /* Contur auriu discret */
+} /* Închide .panel */
+
+.info, .empty { /* Mesaje de încărcare și stare goală */
+  text-align: center; /* Text centrat */
+  padding: 15px; /* Spațiu interior */
+  font-style: italic; /* Text cursiv */
+  color: var(--text-muted); /* Culoare discretă */
+} /* Închide .info, .empty */
+
+.error { /* Mesaj de eroare comun */
+  text-align: center; /* Text centrat */
+  padding: 12px; /* Spațiu interior */
+  color: #fecdd3; /* Text roz deschis */
+  background: rgba(159, 18, 57, 0.35); /* Fundal roșiatic */
+  border-radius: 8px; /* Colțuri rotunjite */
+  font-weight: bold; /* Text îngroșat */
+  border: 1px solid rgba(244, 114, 182, 0.45); /* Contur roz */
+} /* Închide .error */
+
+.btn { /* Buton principal comun */
+  background: var(--roz-carte); /* Fundal roz */
+  color: #fffbeb; /* Text alb cald */
+  border: 1.5px solid #fde047; /* Margine aurie */
+  padding: 10px 16px; /* Spațiu interior */
+  border-radius: 8px; /* Colțuri rotunjite */
+  cursor: pointer; /* Cursor de click */
+  font: inherit; /* Moștenește fontul */
+  font-weight: bold; /* Text îngroșat */
+} /* Închide .btn */
+
+.btn-danger { /* Buton comun de ștergere */
+  background: linear-gradient(135deg, #0f766e, #064e3b); /* Gradient turcoaz */
+  color: #fffbeb; /* Text alb cald */
+  border: 1px solid #fde047; /* Margine aurie */
+  padding: 6px; /* Spațiu interior */
+  border-radius: 4px; /* Colțuri rotunjite */
+  cursor: pointer; /* Cursor de click */
+  font-weight: bold; /* Text îngroșat */
+  font-family: "Georgia", serif; /* Font clasic */
+  font-size: 0.68rem; /* Mărime compactă pentru interiorul cărții */
+  width: 100%; /* Ocupă toată lățimea disponibilă */
+} /* Închide .btn-danger */
+
+.btn-danger:hover { /* Hover pe butonul de ștergere */
+  background: linear-gradient(135deg, #b91c1c, #7f1d1d); /* Devine roșu la hover */
+} /* Închide .btn-danger:hover */
+
+.badge { /* Etichetă comună pentru format/gen */
+  display: inline-block; /* Afișare tip etichetă */
+  font-size: 0.6rem; /* Text mic */
+  padding: 3px 9px; /* Spațiu interior */
+  border-radius: 4px; /* Colțuri ușor rotunjite */
+  font-weight: bold; /* Text îngroșat */
+  text-transform: uppercase; /* Majuscule */
+  font-family: sans-serif; /* Font curat */
+  background: var(--turcuaz); /* Fundal implicit turcoaz */
+  color: #fffbeb; /* Text deschis */
+} /* Închide .badge */
+
+.badge-brosata { background-color: #fbcfe8; color: #831843; border: 1px solid #f472b6; } /* Badge Broșată */
+.badge-digitala { background-color: #bae6fd; color: #082f49; border: 1px solid #7dd3fc; } /* Badge Digitală */
+.badge-cartonata { background-color: #fef08a; color: #422006; border: 1px solid #eab308; } /* Badge Cartonată */

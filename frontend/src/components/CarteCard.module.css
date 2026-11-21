@@ -1,0 +1,171 @@
+.slot { /* Locul unei singure cărți pe raft */
+  list-style: none; /* Fără bulină */
+  flex: 0 0 54px; /* Lățime fixă de 54px (garantează că stau una lângă alta) */
+  width: 54px; /* Lățimea cotorului */
+  height: 225px; /* Înălțimea cărții */
+  position: relative; /* Referință pentru volumul 3D */
+  perspective: 2200px; /* Activează perspectiva 3D */
+  cursor: pointer; /* Cursor de click */
+  z-index: 1; /* Nivel normal */
+  transform-origin: bottom center; /* Scalarea pornește de jos */
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); /* Animație lină */
+} /* Închide .slot */
+
+.slot:hover, .slot:active { /* Când treci cu mouse-ul peste carte */
+  z-index: 200; /* Aduce cartea peste toate celelalte */
+  transform: scale(1) !important; /* Îndreaptă cartea */
+} /* Închide .slot:hover */
+
+.volume { /* Volumul 3D al cărții (cotor + copertă + pagini) */
+  position: absolute; /* Poziționat în slot */
+  top: 0; /* Aliniat sus */
+  left: 0; /* Aliniat stânga */
+  width: 190px; /* Lățimea cărții deschise */
+  height: 225px; /* Înălțimea cărții */
+  transform-style: preserve-3d; /* Păstrează copiii în spațiu 3D */
+  transform-origin: left center; /* Rotația se face pe marginea stângă */
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease; /* Animație 3D */
+  transform: rotateY(-90deg); /* Pe raft se vede doar cotorul */
+} /* Închide .volume */
+
+.slot:hover .volume { /* Scoate cartea din raft și o rotește spre utilizator */
+  transform: rotateY(0deg) translateZ(75px) translateX(110px) translateY(-14px) rotateX(5deg); /* Poziția 3D scoasă */
+  filter: drop-shadow(-25px 30px 28px rgba(0, 0, 0, 0.95)); /* Umbră sub cartea ridicată */
+} /* Închide .slot:hover .volume */
+
+.spine { /* Cotorul vizibil pe raft */
+  position: absolute; /* Lipit de volum */
+  top: 0; /* Aliniat sus */
+  left: 0; /* Aliniat stânga */
+  width: 54px; /* Grosimea cotorului */
+  height: 225px; /* Înălțimea cotorului */
+  transform-origin: left center; /* Axe de rotație */
+  transform: rotateY(90deg); /* Perpendicular pe copertă */
+  display: flex; /* Centrează textul */
+  align-items: center; /* Centrare orizontală */
+  justify-content: center; /* Centrare verticală */
+  padding: 16px 0; /* Spațiu sus/jos */
+  border-radius: 4px 0 0 4px; /* Rotunjire cotor */
+  border: 1px solid rgba(254, 240, 138, 0.4); /* Contur auriu */
+  background: linear-gradient(90deg, #03221f, var(--turcuaz) 35%, #11998e 50%, var(--turcuaz) 65%, #03221f); /* Gradient turcoaz */
+  box-shadow: inset -6px 0 12px rgba(0, 0, 0, 0.8), inset 0 8px 0 #b45309, inset 0 -8px 0 #b45309; /* Efect 3D de piele legată */
+} /* Închide .spine */
+
+.citita .spine { /* Cotor roz pentru cărțile citite/împrumutate */
+  background: linear-gradient(90deg, #420b1f, var(--roz-carte) 35%, #ec6b96 50%, var(--roz-carte) 65%, #420b1f); /* Gradient roz */
+} /* Închide .citita .spine */
+
+.spineLink { /* Titlul vertical de pe cotor (Link către /carti/:id) */
+  writing-mode: vertical-rl; /* Scriere pe verticală */
+  transform: rotate(180deg); /* Orientare de jos în sus */
+  color: #fef08a; /* Text auriu */
+  font-weight: 700; /* Text îngroșat */
+  font-size: 0.82rem; /* Mărime lizibilă */
+  white-space: nowrap; /* Pe un singur rând */
+  overflow: hidden; /* Ascunde ce depășește */
+  text-overflow: ellipsis; /* Pune ... dacă e prea lung */
+  max-height: 165px; /* Limită înălțime */
+  text-decoration: none; /* Fără subliniere */
+} /* Închide .spineLink */
+
+.frontCover { /* Coperta din față care se deschide la hover */
+  position: absolute; /* Peste pagini */
+  top: 0; /* Sus */
+  left: 0; /* Stânga */
+  width: 190px; /* Lățimea copertei */
+  height: 225px; /* Înălțimea copertei */
+  transform-origin: left center; /* Se deschide ca o ușă spre stânga */
+  transform-style: preserve-3d; /* Are față și verso */
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* Animație deschidere */
+  z-index: 5; /* Peste pagini */
+} /* Închide .frontCover */
+
+.slot:hover .frontCover { /* Deschide coperta la 162 de grade */
+  transform: rotateY(-162deg); /* Rotație deschidere */
+} /* Închide .slot:hover .frontCover */
+
+.coverOutside, .coverInside { /* Fața și spatele copertei */
+  position: absolute; /* Ocupă toată coperta */
+  inset: 0; /* Aliniate pe margini */
+  backface-visibility: hidden; /* Ascunde spatele când se rotește */
+  border-radius: 0 6px 6px 0; /* Colțuri rotunjite în dreapta */
+} /* Închide .coverOutside, .coverInside */
+
+.coverOutside { /* Exteriorul copertei */
+  background: radial-gradient(circle at 30% 30%, #15998e, var(--turcuaz) 55%, #032623); /* Turcoaz 3D */
+  padding: 20px 14px; /* Spațiu interior */
+  color: #fffbeb; /* Text crem */
+  display: flex; /* Centrare conținut */
+  flex-direction: column; /* Vertical */
+  align-items: center; /* Centrat */
+  justify-content: center; /* Centrat */
+  text-align: center; /* Text centrat */
+  border: 2px solid #b45309; /* Ramă aurie */
+} /* Închide .coverOutside */
+
+.citita .coverOutside { /* Copertă roz pentru cărțile citite */
+  background: radial-gradient(circle at 30% 30%, #e66692, var(--roz-carte) 50%, #4c0d25); /* Roz 3D */
+} /* Închide .citita .coverOutside */
+
+.coverInside { /* Interiorul copertei (pagina din stânga) */
+  background: radial-gradient(circle at center, #fffbeb 35%, #f3dfc1 80%, #d8ba89); /* Pergament */
+  transform: rotateY(180deg) translateZ(1px); /* Întors pe verso */
+  border-left: 6px solid #78350f; /* Margine legătură */
+  padding: 14px; /* Spațiu interior */
+  display: flex; /* Aliniere */
+  flex-direction: column; /* Vertical */
+  justify-content: space-between; /* Sus și jos */
+  text-align: center; /* Text centrat */
+  color: #451a03; /* Text maro închis */
+} /* Închide .coverInside */
+
+.pages { /* Pagina din dreapta (cu titlu, checkbox și Șterge) */
+  position: absolute; /* În interiorul volumului */
+  top: 4px; /* Ușor retrasă */
+  left: 0; /* Lipită de cotor */
+  width: 184px; /* Lățime pagină */
+  height: 217px; /* Înălțime pagină */
+  z-index: 2; /* Sub copertă */
+  padding: 14px; /* Spațiu interior */
+  display: flex; /* Aliniere */
+  flex-direction: column; /* Vertical */
+  justify-content: center; /* Centrat */
+  align-items: center; /* Centrat */
+  gap: 10px; /* Spațiu între elemente */
+  color: #291507; /* Text cerneală */
+  background: radial-gradient(circle at center, #fffbeb 30%, #f3dfc1 78%, #d2b07e); /* Pergament */
+  border-radius: 0 5px 5px 0; /* Colțuri dreapta */
+  border-right: 6px solid #d6be96; /* Grosimea paginilor */
+} /* Închide .pages */
+
+.detailLink { /* Linkul spre pagina de detaliu din interiorul cărții */
+  font-size: 0.88rem; /* Mărime titlu */
+  font-weight: 800; /* Îngroșat */
+  color: #451a03; /* Maro închis */
+  text-decoration: none; /* Fără subliniere */
+  text-align: center; /* Centrat */
+} /* Închide .detailLink */
+
+.detailLink:hover { /* Hover pe titlul din interior */
+  text-decoration: underline; /* Subliniere */
+} /* Închide .detailLink:hover */
+
+.actions { /* Zona de checkbox și buton Șterge */
+  width: 100%; /* Toată lățimea paginii */
+  display: flex; /* Vertical */
+  flex-direction: column; /* Unul sub altul */
+  gap: 7px; /* Spațiu între ele */
+} /* Închide .actions */
+
+.checkboxLabel { /* Eticheta pentru bifare */
+  display: flex; /* Checkbox lângă text */
+  align-items: center; /* Centrat */
+  justify-content: center; /* Centrat */
+  gap: 6px; /* Spațiu mic */
+  font-size: 0.72rem; /* Text compact */
+  font-weight: 700; /* Îngroșat */
+  background: rgba(255, 255, 255, 0.6); /* Fundal discret */
+  padding: 5px; /* Spațiu interior */
+  border-radius: 4px; /* Colțuri rotunjite */
+  cursor: pointer; /* Cursor de click */
+} /* Închide .checkboxLabel */

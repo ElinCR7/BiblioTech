@@ -1,44 +1,31 @@
-// Toate cererile HTTP stau aici; componentele nu apelează fetch direct.
-export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001";
+export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001"; // Adresa serverului API
 
-// Funcție comună: trimite JSON și aruncă eroare dacă răspunsul nu este 2xx
-async function request(path, options = {}) {
-  const res = await fetch(`${API_URL}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
-  });
+async function request(path, options = {}) { // Funcție comună pentru toate cererile HTTP
+  const headers = { ...(options.headers || {}) }; // Copiază headerele suplimentare dacă există
+  if (options.body) { // Verifică dacă cererea trimite date (POST sau PATCH)
+    headers["Content-Type"] = "application/json"; // Adaugă JSON doar când există body (evită 400)
+  } // Închide if
+  const res = await fetch(`${API_URL}${path}`, { ...options, headers }); // Trimite cererea către server
+  if (!res.ok) throw new Error(`Eroare server: ${res.status}`); // Aruncă eroare pentru status non-2xx
+  return res.status === 204 ? null : res.json(); // Returnează null la 204 sau JSON-ul primit
+} // Încheie request
 
-  if (!res.ok) {
-    throw new Error(`Eroare server: ${res.status}`);
-  }
+export function fetchCarti() { // Cere lista completă de cărți
+  return request("/carti"); // Trimite GET /carti
+} // Încheie fetchCarti
 
-  // 204 No Content nu are corp
-  return res.status === 204 ? null : res.json();
-}
+export function fetchCarte(id) { // Cere o singură carte după id (Etapa 8)[cite: 7]
+  return request(`/carti/${id}`); // Trimite GET /carti/:id[cite: 7]
+} // Încheie fetchCarte
 
-export function fetchCarti() {
-  return request("/carti");
-}
+export function createCarte(carte) { // Adaugă o carte nouă pe server
+  return request("/carti", { method: "POST", body: JSON.stringify(carte) }); // Trimite POST /carti
+} // Încheie createCarte
 
-export function createCarte(carte) {
-  return request("/carti", {
-    method: "POST",
-    body: JSON.stringify(carte),
-  });
-}
+export function updateCarte(id, changes) { // Modifică parțial o carte existentă
+  return request(`/carti/${id}`, { method: "PATCH", body: JSON.stringify(changes) }); // Trimite PATCH /carti/:id
+} // Încheie updateCarte
 
-export function updateCarte(id, changes) {
-  return request(`/carti/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify(changes),
-  });
-}
-
-export function deleteCarte(id) {
-  return request(`/carti/${id}`, {
-    method: "DELETE",
-  });
-}
+export function deleteCarte(id) { // Șterge o carte de pe server
+  return request(`/carti/${id}`, { method: "DELETE" }); // Trimite DELETE /carti/:id
+} // Încheie deleteCarte
