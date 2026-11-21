@@ -32,7 +32,8 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 5: local state and events
 - [x] Stage 6: loading data from a mock API
 - [x] Stage 7: form and validation
-- [ ] Stage 8: routing and detail page
+- [x] Stage 8: routing and detail page
+- [ ] Stage 9: own backend with Express
 
 
 
@@ -157,3 +158,20 @@ Books can be added directly from the page using a controlled form (`CarteForm.js
 | S7-R6 | tw.json and the data-testid attributes from table 7.3 | [tw.json](https://github.com/ElinCR7/BiblioTech/blob/main/tw.json), [CarteCard.jsx#L1-L120](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L1-L120), [CarteList.jsx#L1-L35](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteList.jsx#L1-L35) | `querySelectorAll` in the console |
 | S7-R7 | README Stage 7 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-07.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-07.md) | read |
 | S7-R8 | commit "Stage 7" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/72bc7b8150cd882518a3fb3af5d73ea79fbe78fe) | 
+
+
+## Stage 8: routing and detail page
+The application is now structured behind React Router (`BrowserRouter`, `Routes`, `Route`, `Outlet`, `NavLink`, `Link`, `useParams`) with a shared `Layout` (`Layout.jsx`) and four views: the main 3D library (`CartiPage.jsx` at `/`), a detail page (`CarteDetaliuPage.jsx` at `/carti/:id`) that fetches a single book from the API and handles refresh and missing IDs, an about page (`DesprePage.jsx` at `/despre`), and a 404 page (`NotFoundPage.jsx` at `*`). Shared theme variables and common classes stay in `frontend/src/index.css`, while all component and page styles are modularized into `.module.css` files.
+
+### Tabelul de verificare al Etapei 8
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S8-R1 | header navigation changes page without reload | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx), [Layout.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/Layout.jsx) | click links, watch Network |
+| S8-R2 | click on an item opens its detail page | [CarteCard.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx), [CarteDetaliuPage.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/CarteDetaliuPage.jsx) | click a book title |
+| S8-R3 | refresh on the detail URL works; missing id shows an error | [CarteDetaliuPage.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/CarteDetaliuPage.jsx), [api.js](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js) | refresh `/carti/1`, open `/carti/999` |
+| S8-R4 | unknown URL shows the app 404 page | [App.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/App.jsx), [NotFoundPage.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/NotFoundPage.jsx) | open `/ceva` |
+| S8-R5 | each component has its `.module.css`; `index.css` only shared styles | [index.css](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/index.css), [components](https://github.com/ElinCR7/BiblioTech/tree/main/frontend/src/components), [pages](https://github.com/ElinCR7/BiblioTech/tree/main/frontend/src/pages) | read |
+| S8-R6 | `data-testid` attributes from tables 7.3 and 8.2; detail route `/carti/:id` | [Layout.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/Layout.jsx), [CarteCard.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx), [CarteDetaliuPage.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/CarteDetaliuPage.jsx), [NotFoundPage.jsx](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/NotFoundPage.jsx) | `querySelector` in the console |
+| S8-R7 | README Stage 8 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-08.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-08.md) | read |
+| S8-R8 | commit "Stage 8" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/P57d7c4d97c2e9c83c4d80f8118a6d78c8d6ae9e0) | commit history |
