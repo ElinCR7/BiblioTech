@@ -6,8 +6,11 @@ async function request(path, options = {}) { // Funcție comună pentru toate ce
     headers["Content-Type"] = "application/json"; // Adaugă JSON doar când există body (evită 400)
   } // Închide if
   const res = await fetch(`${API_URL}${path}`, { ...options, headers }); // Trimite cererea către server
-  if (!res.ok) throw new Error(`Eroare server: ${res.status}`); // Aruncă eroare pentru status non-2xx
-  return res.status === 204 ? null : res.json(); // Returnează null la 204 sau JSON-ul primit
+if (!res.ok) {
+  const body = await res.json().catch(() => ({}));
+  throw new Error(body.error || `Eroare server: ${res.status}`);
+}
+return res.status === 204 ? null : res.json(); // <--- VERIFICĂ SĂ EXISTE LINIA ASTA!
 } // Încheie request
 
 export function fetchCarti() { // Cere lista completă de cărți
