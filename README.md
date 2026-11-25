@@ -33,7 +33,8 @@ Open `index.html` in a browser. No build step, no server.
 - [x] Stage 6: loading data from a mock API
 - [x] Stage 7: form and validation
 - [x] Stage 8: routing and detail page
-- [ ] Stage 9: own backend with Express
+- [x] Stage 9: own backend with Express
+- [ ] Stage 10: MariaDB and full CRUD
 
 
 
@@ -175,3 +176,37 @@ The application is now structured behind React Router (`BrowserRouter`, `Routes`
 | S8-R6 | `data-testid` attributes from tables 7.3 and 8.2; detail route `/carti/:id` | [Layout.jsx#L25-L35](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/Layout.jsx#L25-L35), [CarteCard.jsx#L23-L42](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteCard.jsx#L23-L42), [CarteForm.jsx#L49-L150](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/components/CarteForm.jsx#L49-L150), [CarteDetaliuPage.jsx#L33-L57](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/CarteDetaliuPage.jsx#L33-L57), [NotFoundPage.jsx#L5-L9](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/pages/NotFoundPage.jsx#L5-L9) | `querySelector` in the console |
 | S8-R7 | README Stage 8 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-08.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-08.md) | read |
 | S8-R8 | commit "Stage 8" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/57d7c4d97c2e9c83c4d80f8118a6d78c8d6ae9e0)(https://github.com/ElinCR7/BiblioTech/commit/58dcd382aecb002b89b863bbea286948831dbceb) | commit history |
+
+
+
+## Stage 9: own backend
+
+json-server is gone. The API is an Express server in `backend/`, with REST
+routes, server-side validation and CORS. Data is still kept in memory and
+resets on restart.
+
+## How to run
+
+```bash
+cd backend && npm install && npm run dev    # terminal 1, port 3001
+cd frontend && npm install && npm run dev   # terminal 2, port 5173
+
+### API test commands (curl)
+```Bash
+curl -s -w ' -> %{http_code}\n' http://localhost:3001/carti
+curl -s -w ' -> %{http_code}\n' -X POST http://localhost:3001/carti -H "Content-Type: application/json" -d '{"titluAutor":"Din curl - Test","format":"Bro\u0219at\u0103","gen":"SF","rating":5}'
+curl -s -w ' -> %{http_code}\n' -X POST http://localhost:3001/carti -H "Content-Type: application/json" -d '{"titluAutor":""}'
+curl -s -w ' -> %{http_code}\n' http://localhost:3001/carti/999
+curl -s -w ' -> %{http_code}\n' -X DELETE http://localhost:3001/carti/74
+```
+### Tabelul de verificare al Etapei 9
+
+| ID | Requirement | Where (permalink) | How to check |
+|---|---|---|---|
+| S9-R1 | `npm run dev` in `backend/` starts the API on 3001 | [backend/package.json#L1-L19](https://github.com/ElinCR7/BiblioTech/blob/main/backend/package.json#L1-L19), [server.js#L1-L6](https://github.com/ElinCR7/BiblioTech/blob/main/backend/src/server.js#L1-L6) | run it, open `/health` |
+| S9-R2 | all five routes answer with the right codes | [carti.js#L75-L130](https://github.com/ElinCR7/BiblioTech/blob/main/backend/src/routes/carti.js#L75-L130) | `curl` commands from README |
+| S9-R3 | invalid data returns 400 with a clear message | [validation.js#L1-L70](https://github.com/ElinCR7/BiblioTech/blob/main/backend/src/validation.js#L1-L70) | `POST` with empty title |
+| S9-R4 | React app works with `json-server` removed | [frontend/package.json#L1-L30](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/package.json#L1-L30), [api.js#L1-L15](https://github.com/ElinCR7/BiblioTech/blob/main/frontend/src/api.js#L1-L15) | stop everything but backend |
+| S9-R5 | no CORS errors in the browser console | [app.js#L1-L26](https://github.com/ElinCR7/BiblioTech/blob/main/backend/src/app.js#L1-L26) | open console |
+| S9-R6 | README Stage 9 section + AI log | [README.md](https://github.com/ElinCR7/BiblioTech/blob/main/README.md), [ai-log/etapa-09.md](https://github.com/ElinCR7/BiblioTech/blob/main/ai-log/etapa-09.md) | read |
+| S9-R7 | commit "Stage 9" pushed | [Commit GitHub](https://github.com/ElinCR7/BiblioTech/commit/f57db3b71a75f824670a7257c76090b861d7fcb2)| commit history |
